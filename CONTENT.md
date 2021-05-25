@@ -30,3 +30,84 @@
 
 - Material Icon Theme
   - Change the file icons
+
+
+## JavaScript - Refresher
+
+#### let & const
+
+- Use `let` if you want to create a variable that really is variable
+- Use `const` if you plan on creating a constant value
+- Avoid to create `var` variables
+
+
+#### Arrow Functions
+
+```
+const myFnc () => {
+
+}
+```
+
+- No more issue with `this` keyword
+
+#### Export & Imports (Modules)
+
+- person.js
+```
+const person = {
+
+  name: 'Max'
+
+}
+export default person
+```
+
+- utility.js
+```
+export const clean = () => { ... }
+
+export const baseData = 10;
+```
+
+- app.js
+
+```
+import person from './person.js'
+import prs from './person.js'
+```
+  - we can choise witch name we want
+  - note  that the file have default export
+
+```
+import { baseData } from './utility.js'
+import { clean } from './utility.js'
+```
+
+
+- for compatibility reasons
+```
+import {smts as Smth} from './utility.js'
+
+import * as bundled from './utility.js'
+```
+
+#### Spread & Rest Operators
+
+```
+const newArray = [ ...oldArray, 1,2 ]
+const new Object = { ...oldObject, newProp:5 }
+```
+
+#### Destructuring
+
+```
+const numbers = [1,2,3];
+
+[num1, num2] = numbers;
+console.log(num1, num2); // 1 2
+
+
+[num1, , num3] = numbers
+console.log(num1, num2); // 1 3
+```
