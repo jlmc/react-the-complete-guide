@@ -11,6 +11,8 @@
 *coverage
 *atlas-dev-configuration.json
 
+.eslintcache
+
 # testing
 /coverage
 /test-results
