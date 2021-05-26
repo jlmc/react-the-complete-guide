@@ -150,3 +150,11 @@ We suggest that you begin by typing:
 
 Happy hacking!
 ```
+
+
+# NOTES:
+
+- Compoments should Start with UpperCase this is a react rule.
+  - React consider that lower case is html and UpperCase are Rect components
+- Only one root element is allowed for code snnaped
+- [resources](https://github.com/academind/react-complete-guide-code/tree/03-react-basics-working-with-components)
