@@ -111,3 +111,42 @@ console.log(num1, num2); // 1 2
 [num1, , num3] = numbers
 console.log(num1, num2); // 1 3
 ```
+
+---
+
+## Create React App
+
+[See](https://reactjs.org/docs/create-a-new-react-app.html)
+
+```
+npx create-react-app my-app
+cd my-app
+mpm install
+mpm start
+```
+
+Output:
+```
+Success! Created react-complete-guide at react-complete-guide
+Inside that directory, you can run several commands:
+
+  npm start
+    Starts the development server.
+
+  npm run build
+    Bundles the app into static files for production.
+
+  npm test
+    Starts the test runner.
+
+  npm run eject
+    Removes this tool and copies build dependencies, configuration files
+    and scripts into the app directory. If you do this, you can’t go back!
+
+We suggest that you begin by typing:
+
+  cd react-complete-guide
+  npm start
+
+Happy hacking!
+```
