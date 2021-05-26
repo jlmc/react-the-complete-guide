@@ -1,0 +1,16 @@
+.DS_Store
+
+.idea
+
+*.DS_Store
+*.log
+*tailwind.css
+*build
+*dist
+*node_modules
+*coverage
+*atlas-dev-configuration.json
+
+# testing
+/coverage
+/test-results
