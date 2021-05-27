@@ -15,25 +15,23 @@ function Expenses(props) {
   }
 
   const filterExpenses = props.items.filter(expense => {
-    let valid = 'all' === filteredYear || filteredYear === expense.date.getFullYear().toString();
-    return valid;
+    return 'all' === filteredYear || filteredYear === expense.date.getFullYear().toString();
   });
+
+  let expensesContent = <p>No expenses found.</p>;
+
+  if (filterExpenses.length > 0) {
+    expensesContent = filterExpenses.map(expense => (
+      <ExpensiveItem key={expense.id} title={expense.title} price={expense.price} date={expense.date} />
+    ));
+  }
 
   return (
     <Card className="expenses">
       <ExpensesFilter selected={filteredYear} onChangeFilter={onChangeFilterHandler} />
-      {filterExpenses.map(expense => {
-        return <ExpensiveItem key={expense.id} title={expense.title} price={expense.price} date={expense.date} />;
-      })}
+      {expensesContent}
     </Card>
   );
-
-  // return React.createElement(
-  //   'div',
-  //   {},
-  //   React.createElement('h2', {}, "Let's get started!"),
-  //   React.createElement(Expenses, { items: expenses })
-  // );
 }
 
 export default Expenses;
