@@ -10,7 +10,7 @@ function ExpensiveItem(props) {
 
   function onChangeTitleClickedHandler() {
     console.log('Button Clicked ' + new Date());
-    setTitle('Changed ' + Math.random()) // note that the value do not change right way, in reality it schedule a changed
+    setTitle('Changed ' + Math.random()); // note that the value do not change right way, in reality it schedule a changed
   }
 
   return (
