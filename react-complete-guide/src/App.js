@@ -4,7 +4,7 @@ import NewExpense from './components/NewExpense/NewExpense';
 
 //function App() {
 const App = () => {
-  const expensives = [
+  const expenses = [
     {
       id: '1',
       title: 'Car Insurance 1',
@@ -25,6 +25,11 @@ const App = () => {
     },
   ];
 
+  function addExpenseHandler(expenseData) {
+    console.log('In App js');
+    console.log(expenseData);
+  }
+
   /*
   // In the old versions
   return React.createElement(
@@ -38,8 +43,8 @@ const App = () => {
   return (
     <div>
       <h2>Let's get started!</h2>
-      <NewExpense />
-      <Expenses items={expensives} />
+      <NewExpense onExpenseAdded={addExpenseHandler} />
+      <Expenses items={expenses} />
     </div>
   );
 };

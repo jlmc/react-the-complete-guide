@@ -20,7 +20,7 @@ function ExpensiveItem(props) {
         <h2>{title}</h2>
         <div className="expense-item__price">${props.price}</div>
       </div>
-      <button onClick={onChangeTitleClickedHandler}>Change Title</button>
+     {/* <button onClick={onChangeTitleClickedHandler}>Change Title</button>*/}
     </Card>
   );
 }

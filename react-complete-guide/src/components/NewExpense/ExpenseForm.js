@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './ExpenseForm.css';
 
-const ExpenseForm = () => {
+const ExpenseForm = props => {
   let [titleValue, setTitleValue] = useState('');
   let [priceValue, setPriceValue] = useState('');
   let [dateValue, setDateValue] = useState('');
@@ -32,7 +32,7 @@ const ExpenseForm = () => {
       date: new Date(dateValue),
     };
 
-    console.log(`---> ${JSON.stringify(expense)}`);
+    props.onSaveExpenseData(expense);
 
     setTitleValue('');
     setPriceValue('');
