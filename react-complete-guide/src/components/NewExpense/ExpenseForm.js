@@ -2,51 +2,64 @@ import React, { useState } from 'react';
 import './ExpenseForm.css';
 
 const ExpenseForm = () => {
-  //let [titleValue, setTitleValue] = useState('');
-  //let [priceValue, setPriceValue] = useState('');
-  //let [dateValue, setDateValue] = useState('');
-
-  let [userInput, setUserInput] = useState({
-    title: '',
-    price: '',
-    date: '',
-  });
+  let [titleValue, setTitleValue] = useState('');
+  let [priceValue, setPriceValue] = useState('');
+  let [dateValue, setDateValue] = useState('');
 
   function titleChangeHandler(event) {
     let enteredValue = event.target.value;
-    console.log(`The Title ${JSON.stringify(userInput)}`);
-    //setTitleValue(enteredValue);
-    setUserInput({ ...userInput, title: enteredValue });
+    setTitleValue(enteredValue);
   }
 
   function PriceChangeHandler(event) {
     let enteredValue = event.target.value;
-
-    console.log(`The Price ${JSON.stringify(userInput)}`);
-    setUserInput({ ...userInput, price: enteredValue });
+    setPriceValue(enteredValue);
   }
 
   function dateChangeHandler(event) {
     let enteredValue = event.target.value;
 
-    console.log(`The Date ${userInput}`);
-    setUserInput({ ...userInput, date: enteredValue });
+    console.log('===> ' + enteredValue);
+    setDateValue(enteredValue);
+  }
+
+  function formSubmitHandler(event) {
+    event.preventDefault();
+
+    const expense = {
+      title: titleValue,
+      price: priceValue,
+      date: new Date(dateValue),
+    };
+
+    console.log(`---> ${JSON.stringify(expense)}`);
+
+    setTitleValue('');
+    setPriceValue('');
+    setDateValue('');
   }
 
   return (
-    <form>
+    <form onSubmit={formSubmitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title:</label>
-          <input type="text" onChange={titleChangeHandler} />
+          <input type="text" onChange={titleChangeHandler} value={titleValue} />
         </div>
         <div className="new-expense__control">
           <label>Price:</label>
-          <input type="number" min="0.01" step="0.01" onChange={PriceChangeHandler} />
+          <input type="number" min="0.01" step="0.01" onChange={PriceChangeHandler} value={priceValue} />
         </div>
         <div className="new-expense__control">
           <label>Title:</label>
-          <input type="date" min="2019-01-01" max="2050-01-01" onChange={dateChangeHandler} />
+          <input
+            type="date"
+            data-date-format="yyyy-MM-dd"
+            min="2019-01-01"
+            max="2050-01-01"
+            onChange={dateChangeHandler}
+            value={dateValue}
+          />
         </div>
       </div>
       <div className="new-expense__actions">
