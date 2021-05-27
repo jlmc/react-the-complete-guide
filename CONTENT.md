@@ -191,9 +191,152 @@ QUIZ:
 > You can have as many React components as you want / need.
 
 7. Which statement is correct?
-> With React, you build a component tree with one root component that's mounted into a DOM node
+> With React, you build a component tree with one root component that's mounted into a DOM node.
+
+
+8. What does "component tree" mean?
+> You build a tree by nesting components into each other - just as you build a HTML tree when building a standard HTML document.
+
+9. How do you pass data between components?
+> You build your own "HTML elements" in the end, hence you can also define your own attributes (called "props" in React's world)
+
+10. How can you output dynamic data in React components (i.e. in the returned JSX code)?
+> You can't put block statements (e.g. if statements) between those curly braces but you can output any result of any JS expression by using this special feature.
 
 
 
+----
+
+# React State
+
+- Scenario 1:
+
+```js
+import React, { useState } from 'react';
+import './ExpenseForm.css';
+
+const ExpenseForm = () => {
+  let [titleValue, setTitleValue] = useState('');
+  let [priceValue, setPriceValue] = useState('');
+  let [dateValue, setDateValue] = useState('');
+
+  function titleChangeHandler(event) {
+    let enteredValue = event.target.value;
+    setTitleValue(enteredValue);
+  }
+
+  function PriceChangeHandler(event) {
+    let enteredValue = event.target.value;
+    setPriceValue(enteredValue);
+  }
+
+  function dateChangeHandler(event) {
+    let enteredValue = event.target.value;
+    setDateValue(enteredValue);
+  }
+
+  return (
+    <form>
+      <div className="new-expense__controls">
+        <div className="new-expense__control">
+          <label>Title:</label>
+          <input type="text" onChange={titleChangeHandler} />
+        </div>
+        <div className="new-expense__control">
+          <label>Price:</label>
+          <input type="number" min="0.01" step="0.01" onChange={PriceChangeHandler} />
+        </div>
+        <div className="new-expense__control">
+          <label>Title:</label>
+          <input type="date" min="2019-01-01" max="2050-01-01" onChange={dateChangeHandler} />
+        </div>
+      </div>
+      <div className="new-expense__actions">
+        <button type="submit">Add Expense</button>
+      </div>
+    </form>
+  );
+};
+
+export default ExpenseForm;
+
+```
+
+- Scenario 2: 
+```js
+import React, { useState } from 'react';
+import './ExpenseForm.css';
+
+const ExpenseForm = () => {
+  //let [titleValue, setTitleValue] = useState('');
+  //let [priceValue, setPriceValue] = useState('');
+  //let [dateValue, setDateValue] = useState('');
+
+  let [userInput, setUserInput] = useState({
+    title: '',
+    price: '',
+    date: '',
+  });
+
+  function titleChangeHandler(event) {
+    let enteredValue = event.target.value;
+    console.log(`The Title ${JSON.stringify(userInput)}`);
+    //1 - setTitleValue(enteredValue);
+    //3 -  this this is the best approach
+    setUserInput((prevStatus) => {
+      return {...prevStatus, title: enteredValue}
+    });
+  }
+
+  function PriceChangeHandler(event) {
+    let enteredValue = event.target.value;
+
+    console.log(`The Price ${JSON.stringify(userInput)}`);
+    setUserInput({ ...userInput, price: enteredValue });
+  }
+
+  function dateChangeHandler(event) {
+    let enteredValue = event.target.value;
+
+    console.log(`The Date ${userInput}`);
+    setUserInput({ ...userInput, date: enteredValue });
+  }
+
+  return (
+    <form>
+      <div className="new-expense__controls">
+        <div className="new-expense__control">
+          <label>Title:</label>
+          <input type="text" onChange={titleChangeHandler} />
+        </div>
+        <div className="new-expense__control">
+          <label>Price:</label>
+          <input type="number" min="0.01" step="0.01" onChange={PriceChangeHandler} />
+        </div>
+        <div className="new-expense__control">
+          <label>Title:</label>
+          <input type="date" min="2019-01-01" max="2050-01-01" onChange={dateChangeHandler} />
+        </div>
+      </div>
+      <div className="new-expense__actions">
+        <button type="submit">Add Expense</button>
+      </div>
+    </form>
+  );
+};
+
+export default ExpenseForm;
+
+```
 
 
+# Module Resources
+You may want to compare your code to mine (e.g. to find + fix errors).
+
+For that, you find multiple code snapshots for this module here in this [Github repository](https://github.com/academind/react-complete-guide-code/tree/04-react-state-events)
+
+Usage instructions can be found on the page that link is leading to.
+
+Simply pick one of the snapshots in the /code folder - the subfolder names are chosen such that they are easy to match against lecture names in this course section.
+
+You also find section slides (if available) in that Github repository.
