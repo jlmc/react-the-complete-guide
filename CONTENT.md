@@ -158,3 +158,42 @@ Happy hacking!
   - React consider that lower case is html and UpperCase are Rect components
 - Only one root element is allowed for code snnaped
 - [resources](https://github.com/academind/react-complete-guide-code/tree/03-react-basics-working-with-components)
+
+
+### Tips
+
+```
+function App() {
+
+can be also writen as:
+
+const App = () => {
+```
+
+QUIZ:
+
+1. Which kind of code do you write when using React.js?
+> Declarative JavaScript
+
+2. What is "JSX"?
+> React projects like the ones we create via "create-react-app" support JSX syntax. It gets compiled to standard JS code behind the scenes.
+
+3. Why is React all about "Components"?
+> "Components" are really just a way of thinking about user interfaces. React embraces that concept and gives you tools to build components that you can then combine.
+
+4. What does "declarative" mean?
+>  You define the target "state" (UI) and React figures out which JS commands need to be executed to bring that result to life.
+
+5. What is a "React Component"?
+> A component is just that: A JS function that typically returns some HTML (or, to be precise: JSX) code which will be shown on the screen when that component is used.
+
+6. How many custom React components must a React app have?
+> You can have as many React components as you want / need.
+
+7. Which statement is correct?
+> With React, you build a component tree with one root component that's mounted into a DOM node
+
+
+
+
+
