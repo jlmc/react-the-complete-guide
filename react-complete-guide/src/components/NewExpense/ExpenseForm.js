@@ -19,7 +19,6 @@ const ExpenseForm = props => {
   function dateChangeHandler(event) {
     let enteredValue = event.target.value;
 
-    console.log('===> ' + enteredValue);
     setDateValue(enteredValue);
   }
 
@@ -28,7 +27,7 @@ const ExpenseForm = props => {
 
     const expense = {
       title: titleValue,
-      price: priceValue,
+      price: Number.parseFloat(priceValue),
       date: new Date(dateValue),
     };
 
@@ -48,13 +47,13 @@ const ExpenseForm = props => {
         </div>
         <div className="new-expense__control">
           <label>Price:</label>
-          <input type="number" min="0.00" step="5.00" onChange={PriceChangeHandler} value={priceValue} />
+          <input type="number" min="0.00" step="0.01" onChange={PriceChangeHandler} value={priceValue} />
         </div>
         <div className="new-expense__control">
           <label>Title:</label>
           <input
             type="date"
-            data-date-format="yyyy-MM-dd"
+            pattern="yyyy-MM-dd"
             min="2019-01-01"
             max="2050-01-01"
             onChange={dateChangeHandler}
