@@ -191,8 +191,25 @@ QUIZ:
 > You can have as many React components as you want / need.
 
 7. Which statement is correct?
-> With React, you build a component tree with one root component that's mounted into a DOM node
+> With React, you build a component tree with one root component that's mounted into a DOM node.
 
+
+8. What does "component tree" mean?
+> You build a tree by nesting components into each other - just as you build a HTML tree when building a standard HTML document.
+
+9. How do you pass data between components?
+> You build your own "HTML elements" in the end, hence you can also define your own attributes (called "props" in React's world)
+
+10. How can you output dynamic data in React components (i.e. in the returned JSX code)?
+> You can't put block statements (e.g. if statements) between those curly braces but you can output any result of any JS expression by using this special feature.
+
+
+
+----
+
+# React State
+
+ - 
 
 
 
