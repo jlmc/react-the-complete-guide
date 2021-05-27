@@ -1,4 +1,5 @@
 import Expenses from './components/Expenses';
+import React from 'react';
 
 function App() {
   const expensives = [
@@ -22,10 +23,19 @@ function App() {
     },
   ];
 
+  /*
+  // In the old versions
+  return React.createElement(
+      'div',
+      {},
+      React.createElement('h2', {}, 'Let\'s get started!'),
+      React.createElement(Expenses, {items: expensives})
+      )
+   */
+
   return (
     <div>
       <h2>Let's get started!</h2>
-
       <Expenses items={expensives} />
     </div>
   );
