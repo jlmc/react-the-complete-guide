@@ -356,10 +356,104 @@ You also find section slides (if available) in that Github repository.
 [React DevTools Browser Extension](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi/related?hl=en)
 
 
-## 80 - hands up project
+## 8 - hands up project
 
 ```
 yarn add --dev --exact prettier
 # in the package.json file add the new script:
 "prettier": "npx prettier --write ."
+```
+
+
+## 9 - Drive Deeper: Working with Fragments, Portals and Refs
+
+- If we only need to read values from http input then we can use Refs instead of status.
+- let's see one example: `AddUser.js`
+
+
+```javascript
+import React, {useRef, useState} from 'react';
+
+import styles from './AddUser.module.css';
+import Card from '../UI/Card';
+import Button from '../UI/Button';
+import ErrorModal from '../UI/ErrorModal';
+
+const AddUser = props => {
+  let usernameInputRef = useRef();
+  let ageInputRef = useRef();
+
+  let [isValid, setIsValid] = useState(true);
+  let [_error, setError] = useState();
+
+  function addUserHandler(event) {
+    event.preventDefault();
+
+    console.log(usernameInputRef)
+
+    let _username = usernameInputRef.current.value;
+    let _age = ageInputRef.current.value;
+
+    if (_username.trim().length === 0) {
+      setIsValid(false);
+
+      setError({
+        title: 'Invalid input',
+        message: 'Please enter a valid name and age (non-empty values).',
+      });
+
+      return;
+    }
+
+    if (!isNumeric(_age) || +_age <= 0) {
+      setIsValid(false);
+      setError({
+        title: 'Invalid age',
+        message: 'Please enter a valid age (> 0).',
+      });
+      return;
+    }
+
+    let newUser = {
+      name: _username,
+      age: +_age,
+    };
+
+    console.log(newUser);
+
+    props.addUser(newUser);
+
+    setIsValid(true);
+
+    // Note that we should never use ref to manipulate the dom... DOM should only be manipulated by the React
+    usernameInputRef.current.value = '';
+    ageInputRef.current.value = '0';
+  }
+
+  function isNumeric(value) {
+    return /^\d+$/.test(value);
+  }
+
+  const errorHandler = () => {
+    setError(null);
+  };
+
+  return (
+    <>
+      {_error && <ErrorModal title={_error.title} message={_error.message} onConfirm={errorHandler} />}
+      <Card className={`${styles.input} ${!isValid && styles.invalid}`}>
+        <form onSubmit={addUserHandler}>
+          <label htmlFor="username">Username</label>
+          <input id="username" type="text" ref={usernameInputRef}/>
+          <label htmlFor="age">Age (Years)</label>
+          <input id="age" min="0" step="1" type="number" ref={ageInputRef}/>
+          <Button type="submit">Add User</Button>
+        </form>
+      </Card>
+    </>
+  );
+};
+
+export default AddUser;
+
 ```
