@@ -340,3 +340,17 @@ Usage instructions can be found on the page that link is leading to.
 Simply pick one of the snapshots in the /code folder - the subfolder names are chosen such that they are easy to match against lecture names in this course section.
 
 You also find section slides (if available) in that Github repository.
+
+
+## Styling
+
+[How to Styling React Apps](/01-starting-project/README.md)
+
+
+## How to Debug React Apps
+
+- How find and fix errors
+- Debugging & analyzing react Apps
+- Using the React DevTools
+
+[React DevTools Browser Extension](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi/related?hl=en)
