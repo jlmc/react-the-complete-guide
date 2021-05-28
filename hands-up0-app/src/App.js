@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import AddUser from './components/Users/AddUser';
 import UserList from './components/Users/UserList';
-import Wrapper from './components/UI/Wrapper';
 
 const DUMMY_USERS = [];
 
@@ -20,10 +19,10 @@ function App() {
   }
 
   return (
-    <Wrapper>
+    <React.Fragment>
       <AddUser addUser={addUserHandler} />
       <UserList users={_users} />
-    </Wrapper>
+    </React.Fragment>
   );
 }
 

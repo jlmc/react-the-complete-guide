@@ -68,7 +68,7 @@ const AddUser = props => {
   };
 
   return (
-    <Wrapper>
+    <>
       {_error && <ErrorModal title={_error.title} message={_error.message} onConfirm={errorHandler} />}
       <Card className={`${styles.input} ${!isValid && styles.invalid}`}>
         <form onSubmit={addUserHandler}>
@@ -79,7 +79,7 @@ const AddUser = props => {
           <Button type="submit">Add User</Button>
         </form>
       </Card>
-    </Wrapper>
+    </>
   );
 };
 
