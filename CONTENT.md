@@ -354,3 +354,12 @@ You also find section slides (if available) in that Github repository.
 - Using the React DevTools
 
 [React DevTools Browser Extension](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi/related?hl=en)
+
+
+## 80 - hands up project
+
+```
+yarn add --dev --exact prettier
+# in the package.json file add the new script:
+"prettier": "npx prettier --write ."
+```
