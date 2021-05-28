@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 
 const FormControl = styled.div`
+  width: 100%;
   margin: 0.5rem 0;
   
   & label {
@@ -24,13 +25,18 @@ const FormControl = styled.div`
     padding: 0 0.25rem;
     background-color: ${props => (props.invalid ? '#ffd7d7' : 'transparent')};
   }
+  
+  @media (min-width: 768px) {
+    width: auto;
+  }
 
   & input:focus {
     outline: none;
     background: #fad0ec;
     border-color: #8b005d;
   }
-
+  
+  
 `;
 
 
