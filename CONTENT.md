@@ -482,3 +482,7 @@ useEffect(() => { ... }, [dependencies ])
   - And the specified dependencies are the second argument  
 
 ![use Effect](docs/useEffects.png)
+
+More About:
+
+[What to add & Not to add as Dependencies](10-sideeffect/USE-EFFECTS.md)
