@@ -486,3 +486,7 @@ useEffect(() => { ... }, [dependencies ])
 More About:
 
 [What to add & Not to add as Dependencies](10-sideeffect/USE-EFFECTS.md)
+
+## UseReduce
+
+![Use Reduce](docs/useReduce.png)

@@ -1,20 +1,45 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useReducer, useState} from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
 
+
+const emailReducer = (status, action) => {
+
+  return {value: '', isValid: false};
+};
+
 const Login = (props) => {
   const [enteredEmail, setEnteredEmail] = useState('');
   const [emailIsValid, setEmailIsValid] = useState();
+
+  const [emailState, dispatchEmail] =
+      useReducer(emailReducer,
+          {
+            value: '',
+            isValid: false
+          });
+
   const [enteredPassword, setEnteredPassword] = useState('');
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
   useEffect(() => {
-    setFormIsValid(
-        enteredEmail.includes('@') && enteredPassword.trim().length > 1
-    );
+
+    let timeoutIdentifier = setTimeout(() => {
+      console.log(`${new Date()} - Checking Login`)
+
+      // here we can make a http request
+
+      setFormIsValid(enteredEmail.includes('@') && enteredPassword.trim().length > 1);
+    }, 500)
+
+    return () => {
+      console.log(`${new Date()} - CLEANUP function`)
+      clearTimeout(timeoutIdentifier)
+    };
+
   }, [enteredEmail, enteredPassword]);
 
   const emailChangeHandler = (event) => {
