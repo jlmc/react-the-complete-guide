@@ -457,3 +457,28 @@ const AddUser = props => {
 export default AddUser;
 
 ```
+
+
+## Section 10: Advanced: Handling Side Effects, Using Reducers & Using the…
+
+We can define Side Effects was anything that can happens in our application like for example:
+
+  - Store Data in Browser Storage
+  - Send Http Request to backend Server
+  - Set & Manage Timers
+
+- Tasks that are all not related with bring something to the screen.
+- Because all react components are just javascript functions we should not declare those side effects inside the components, because for example we should not execute some http request every time a components is rendered.
+
+React have a better tool that allow us to segregate to side effects: `useEffect()` Hook
+  - The useEffect() Hook is simply another built in Hook. So another function you can run inside your component function that will do something special. 
+  - The useEffect() Hook is called with two arguments with two parameters. 
+
+```javascript
+useEffect(() => { ... }, [dependencies ])
+```
+
+  - The first one is a function that should be executed after every component evaluation , if the specified dependencies changed.
+  - And the specified dependencies are the second argument  
+
+![use Effect](docs/useEffects.png)
