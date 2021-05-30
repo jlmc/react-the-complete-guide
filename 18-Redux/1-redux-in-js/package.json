@@ -1,0 +1,15 @@
+{
+  "name": "1-redux-in",
+  "version": "1.0.0",
+  "description": "1. create a node package json file",
+  "main": "redux-demo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "redux": "^4.1.0"
+  }
+}
