@@ -35,17 +35,40 @@ const counterSliceXX =
         }
     })
 
+const initialAuthenticationState = { isAuthenticated: false};
+
+const authenticationSlice =
+createSlice(
+    {
+        name: "authentication",
+        initialState: initialAuthenticationState,
+        reducers: {
+            login(state, action) {
+                console.log(`LOGIN! ${JSON.stringify(state)} --> ${JSON.stringify(action)} `)
+                state.isAuthenticated = true;
+            },
+            logout(state, action) {
+                console.log(`LOGOUT! ${state} --> ${action} `)
+                state.isAuthenticated = false;
+            }
+        }
+
+    }
+)
 
 
 //const store = createStore(counterSliceXX.reducer);
 // The configureStore is more useful in biggest application, because it allow us to merge multiple store
 const store = configureStore({
     reducer: {
-        counter: counterSliceXX.reducer
+        counter: counterSliceXX.reducer,
         //    ... more reducer
+        authentication: authenticationSlice.reducer
     }
 });
 
-export const counterSliceXXActions = counterSliceXX.actions
+export const counterSliceXXActions = counterSliceXX.actions;
+
+export const authenticationSliceActions = authenticationSlice.actions;
 
 export default store;
