@@ -58,3 +58,12 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counter)
 ```
+
+
+## Redux tool kit
+
+```shell
+npm install @reduxjs/toolkit
+or
+yarn add @reduxjs/toolkit
+```
