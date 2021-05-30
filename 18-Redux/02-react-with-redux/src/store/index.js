@@ -18,6 +18,11 @@ function counterReducerFunction(state = { counter: 0}, action) {
             counter: 0
         }
     }
+    if (action.type === 'increase') {
+        return {
+            counter: state.counter + action.amount
+        }
+    }
 
     return state;
 }
