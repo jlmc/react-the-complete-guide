@@ -10,3 +10,12 @@ npm install -y
 ```
 npm install redux
 ```
+
+3. now we can use redux 
+```
+```
+
+4. Execute:
+```
+node redux-demo.js
+```
