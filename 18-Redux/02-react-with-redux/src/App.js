@@ -8,3 +8,7 @@ function App() {
 }
 
 export default App;
+
+
+// to provider our Redux store,
+// we should go to the place where we render the app react (index.js)
