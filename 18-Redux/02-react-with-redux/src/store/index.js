@@ -35,7 +35,10 @@ const counterSliceXX =
         }
     })
 
-const initialAuthenticationState = { isAuthenticated: false};
+const initialAuthenticationState = {
+    isAuthenticated: false,
+    username: ''
+};
 
 const authenticationSlice =
 createSlice(
@@ -45,6 +48,10 @@ createSlice(
         reducers: {
             login(state, action) {
                 console.log(`LOGIN! ${JSON.stringify(state)} --> ${JSON.stringify(action)} `)
+
+                // TODO: missing
+
+                state.username = action.payload.username;
                 state.isAuthenticated = true;
             },
             logout(state, action) {
