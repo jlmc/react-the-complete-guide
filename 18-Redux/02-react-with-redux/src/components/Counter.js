@@ -1,39 +1,34 @@
 import classes from './Counter.module.css';
 import {useDispatch, useSelector} from "react-redux";
+import {counterSliceXXActions} from "../store/index";
+
 
 const Counter = () => {
-  const dispatch = useDispatch();
-
-  // counter managed by redux, we will always have the most recent data on the conter instance
-  const counter =
-    useSelector(state => {
-      // state managed by redux
-        return state.counter
-    })
-
-  const showCounter = useSelector(state => state.showCounter);
-
+    const dispatch = useDispatch();
+    const counter = useSelector((state) => state.counter.counter);
+    const show = useSelector((state) => state.counter.showCounter);
 
   const toggleCounterHandler = () => {
-    dispatch( {type: 'toggle' } )
+    dispatch(counterSliceXXActions.toggle())
   };
 
   function incrementHandlerFunction() {
-    dispatch( {type: 'increment' } )
+      console.log("---")
+      dispatch(counterSliceXXActions.increment())
   }
 
     function incrementByHandlerFunction() {
-        dispatch( {type: 'increase', amount: 5   } )
+        dispatch(counterSliceXXActions.incrementBy(5)); // {type: 'UNIQUE_IDENTIFIER', payload: 5}
     }
 
   function decrementHandlerFunction() {
-    dispatch( {type: 'decrement' } )
+      dispatch(counterSliceXXActions.decrement())
   }
 
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-        {showCounter &&  <div className={classes.value}> {counter} </div>}
+        {show && <div className={classes.value}> {counter} </div> }
       <div>
           <button onClick={incrementHandlerFunction}>Increment</button>
           <button onClick={incrementByHandlerFunction}>Increment by 5</button>
