@@ -15,18 +15,24 @@ export function fetchCardData() {
             if (!response.ok) {
                 throw new Error('Error fetching cart data!');
             }
-            const data = await response.json();
-            return data;
+            return await response.json();
         };
 
         try {
-            const data =  await fetchData();
+            let data =  await fetchData();
 
             dispatch(uiActions.showNotification({
                 status: 'success',
                 title: 'Success...',
                 message: 'fetch cart data Successfully!'
             }));
+
+            if (data == null || data.items === undefined || data.totalQuantity === undefined) {
+                data = {
+                    items: [],
+                    totalQuantity: 0
+                }
+            }
 
             dispatch(cartActions.replaceCart(data))
 
@@ -36,6 +42,8 @@ export function fetchCardData() {
                 title: 'Error!',
                 message: 'Fetching cart data Failed!'
             }));
+
+            console.error(error)
         }
 
     }
