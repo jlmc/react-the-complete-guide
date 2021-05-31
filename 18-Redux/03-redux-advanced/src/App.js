@@ -2,9 +2,17 @@ import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import {useSelector} from "react-redux";
+import {useEffect} from "react";
 
 function App() {
   const showCart = useSelector(state => state.ui.cartIsVisible);
+  const cart = useSelector(state => state.cart);
+
+  useEffect(() => {
+      console.log("__FETCHING data from back end !!!!!")
+      fetch('https://react-the-complete-guide-915ce-default-rtdb.europe-west1.firebasedatabase.app/cart.json',
+          {method: 'PUT', body: JSON.stringify(cart) })
+  }, [cart])
 
   return (
     <Layout>
