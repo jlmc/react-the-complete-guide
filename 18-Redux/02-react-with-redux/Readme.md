@@ -67,3 +67,16 @@ npm install @reduxjs/toolkit
 or
 yarn add @reduxjs/toolkit
 ```
+
+# Section 19: Advanced Redux
+
+- Reducers must be **pure**, **side-effect free**, **synchronous**  
+
+> Where should side effect code and async task be executed? like for example http requests?
+
+- we have  2 Possibilities:
+
+1. Inside the components (e.g. useEffect())
+
+2. Inside the action creators functions: :)
+  - This is a provided by the redux
