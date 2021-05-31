@@ -3,6 +3,7 @@ import Products from "./pages/Products";
 import Welcome from "./pages/Welcome";
 import MainHeader from "./components/MainHeader";
 import ProductDetail from "./pages/ProductDetail";
+import NotFound from "./pages/NotFound";
 
 function App() {
 
@@ -24,6 +25,9 @@ function App() {
                     </Route>
                     <Route path='/products/:productId'>
                         <ProductDetail/>
+                    </Route>
+                    <Route path="*">
+                        <NotFound/>
                     </Route>
                 </Switch>
             </main>
