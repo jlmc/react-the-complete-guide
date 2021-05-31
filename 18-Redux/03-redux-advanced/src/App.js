@@ -4,7 +4,7 @@ import Products from './components/Shop/Products';
 import {useDispatch, useSelector} from "react-redux";
 import {Fragment, useEffect} from "react";
 import Notification from "./components/UI/Notification";
-import {sendCartData} from "./store/cart-slice";
+import {fetchCardData, sendCartData} from "./store/cart-actions";
 
 let isInitial = true;
 
@@ -14,6 +14,10 @@ function App() {
     const notification = useSelector(state => state.ui.notification);
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchCardData())
+    }, [dispatch])
 
     useEffect(() => {
         // If is a reload page then should not push any thing to the server
