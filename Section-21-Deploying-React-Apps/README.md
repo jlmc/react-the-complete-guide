@@ -88,3 +88,39 @@ serve -s build
 
 As result of the previous process, we can find the folder `build`.
 The content of the `build` folder hold all the code you need to deploy in the end.
+
+
+## 294. Getting Started With Deployment (Uploading Files)
+
+- React SPA is a "Static Website" only HTML, CSS & JavaScript.
+
+- To deploy our app we need A `Static Site Host`.
+
+- If we Google search for: **static website hosting provider** we can find several options:
+
+
+### Using Firebase Hosting
+
+1. in your firebase account click hosting
+
+2. Executing the command in your local system:
+
+Install Firebase CLI
+```
+npm install -g firebase-tools
+```
+
+
+Initialise your project
+
+Sign in to Google
+```
+firebase login
+```
+
+Initiate you project (this command should be runned from your app root folder, source fould of project, not the build)
+```
+firebase init
+```
+
+At some moment it will ask you where the resources to deploy, and then you should indicate that are in the build folder.
