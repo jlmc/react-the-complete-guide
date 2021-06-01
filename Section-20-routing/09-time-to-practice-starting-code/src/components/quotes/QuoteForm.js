@@ -40,6 +40,8 @@ const QuoteForm = (props) => {
         <div className={classes.actions}>
           <button className='btn'>Add Quote</button>
         </div>
+
+
       </form>
     </Card>
   );
