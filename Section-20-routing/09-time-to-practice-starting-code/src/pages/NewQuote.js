@@ -5,7 +5,7 @@ const NewQuote = () => {
     const history = useHistory();
 
     const onAddQuoteHandler = (quote) => {
-        console.log("----");
+        console.log(quote);
 
         /**
          * push vs replace
