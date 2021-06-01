@@ -124,3 +124,11 @@ firebase init
 ```
 
 At some moment it will ask you where the resources to deploy, and then you should indicate that are in the build folder.
+
+
+- Create a firebase configuration (configure your server to always ignore the url)
+
+- firebase deploy
+```
+firebase deploy
+```
