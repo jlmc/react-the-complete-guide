@@ -88,3 +88,11 @@ npm test
 ```
 yarn test
 ```
+
+
+# SUMMARY Documentations:
+
+- https://jestjs.io/
+- https://jestjs.io/docs/getting-started
+
+- https://testing-library.com/docs/react-testing-library/intro/
