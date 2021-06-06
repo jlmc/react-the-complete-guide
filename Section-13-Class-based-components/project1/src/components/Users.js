@@ -3,13 +3,6 @@ import User from './User';
 
 import classes from './Users.module.css';
 
-const DUMMY_USERS = [
-  { id: 'u1', name: 'Max' },
-  { id: 'u2', name: 'Manuel' },
-  { id: 'u3', name: 'Julie' },
-];
-
-
 class Users extends Component {
 
   constructor(props, context) {
@@ -33,10 +26,32 @@ class Users extends Component {
     });
   }
 
+  /**
+   * Called once when component mounted (was evaluated & rendered)
+   * equivalent to: useEffect(..., [])
+   */
+  componentDidMount() {
+  }
+
+  /**
+   * Called once component updated (was evaluated & rendered)
+   * equivalent to: useEffect(..., [someDependency])
+   */
+  componentDidUpdate(prevProps, prevState, snapshot) {
+  }
+
+  /**
+   * Called right before component is unmounted (remove from the DOM)
+   * equivalent to: useEffect(() => {...}, [])
+   */
+  componentWillUnmount() {
+  }
+
+
   render() {
     const usersList = (
         <ul>
-          {DUMMY_USERS.map((user) => (
+          {this.props.users.map((user) => (
               <User key={user.id} name={user.name} />
           ))}
         </ul>
