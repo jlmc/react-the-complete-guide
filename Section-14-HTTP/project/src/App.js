@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
+import AddMovie from "./components/AddMovie";
 
 function App() {
 
@@ -96,9 +97,24 @@ function App() {
 
     }
 
+    async function addMovieHandler(movie) {
+        const response = await fetch('https://react-the-complete-guide-915ce-default-rtdb.europe-west1.firebasedatabase.app/movies.json', {
+            method: 'POST',
+            body: JSON.stringify(movie),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        console.log(data);
+    }
+
 
     return (
         <React.Fragment>
+            <section>
+                <AddMovie onAddMovie={addMovieHandler} />
+            </section>
             <section>
                 <button onClick={asyncFetchMoviesHandler}>Fetch Movies</button>
             </section>
