@@ -8,6 +8,7 @@ function App() {
 
     const [movies, setMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     /* useEffect(() => {
          fetchMoviesHandler();
@@ -17,7 +18,9 @@ function App() {
         console.log(isLoading)
 
         setIsLoading(true);
-
+        setError((prevStatus) => {
+            setError(null);
+        })
 
 
         fetch("https://swapi.dev/api/films/", {method: 'GET'})
@@ -47,33 +50,44 @@ function App() {
     async function asyncFetchMoviesHandler() {
         setMovies([])
         setIsLoading((prevState => {
-
-            setIsLoading(true);
-
+            setIsLoading(true)
         }));
-
-
-        const response = await fetch("https://swapi.dev/api/films/", {method: 'GET'});
-        const data = await response.json();
-
-
-        //console.log(JSON.stringify(data))
-        const transformedMovies =
-            data.results.map((movieData) => {
-                return {
-                    id: movieData.episode_id,
-                    title: movieData.title,
-                    openingText: movieData.opening_crawl,
-                    releaseDate: movieData.release_date
-                }
-            });
-
-        setMovies(transformedMovies);
         setIsLoading((prevState => {
-
-            setIsLoading(false);
-
+            setError(null)
         }));
+
+        try {
+
+
+            const response = await fetch("https://swapi.dev/api/films/", {method: 'GET'});
+
+            if (!response.ok) {
+                throw new Error('Something went wrong!');
+            }
+
+            const data = await response.json();
+
+            //console.log(JSON.stringify(data))
+            const transformedMovies =
+                data.results.map((movieData) => {
+                    return {
+                        id: movieData.episode_id,
+                        title: movieData.title,
+                        openingText: movieData.opening_crawl,
+                        releaseDate: movieData.release_date
+                    }
+                });
+
+            setMovies(transformedMovies);
+
+        } catch (error) {
+            setError(error.message)
+        } finally {
+            setIsLoading((prevState) => {
+                setIsLoading(false);
+            });
+        }
+
     }
 
 
@@ -85,8 +99,9 @@ function App() {
             <section>
                 <MoviesList movies={movies}/>
                 {!isLoading && movies.length > 0 && <MoviesList movies={movies}/>}
-                {!isLoading && movies.length === 0 && <p>Found no movies!</p>}}
+                {!isLoading && movies.length === 0 && !error && <p>Found no movies!</p>}
                 {isLoading && <p>loading ...</p>}
+                {!isLoading && error && <p>{error} ...</p>}
             </section>
         </React.Fragment>
     );
