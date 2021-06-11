@@ -2,6 +2,7 @@ import classes from './AvailableMeals.module.css';
 import Card from "../UI/Card";
 import MealItem from "./MealItem/MealItem";
 import {useEffect, useState} from "react";
+import {BACKEND_URL} from "../utils";
 
 /*
 const DUMMY_MEALS = [
@@ -44,7 +45,7 @@ const AvailableMeals = (props) => {
 
         const fetchMeals = async () => {
             setIsLoading(true);
-            const response = await fetch('https://react-the-complete-guide-915ce-default-rtdb.europe-west1.firebasedatabase.app/means.json')
+            const response = await fetch(`${BACKEND_URL}/means.json`)
 
             if (!response.ok) {
                 throw new Error('Something went wrong!!!')
