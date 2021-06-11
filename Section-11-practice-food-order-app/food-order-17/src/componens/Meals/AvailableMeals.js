@@ -1,7 +1,9 @@
 import classes from './AvailableMeals.module.css';
 import Card from "../UI/Card";
 import MealItem from "./MealItem/MealItem";
+import {useEffect, useState} from "react";
 
+/*
 const DUMMY_MEALS = [
     {
         id: 'm1',
@@ -29,11 +31,62 @@ const DUMMY_MEALS = [
     },
 ];
 
+ */
+
 
 const AvailableMeals = (props) => {
+    
+    const [meals, setMeals] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [httpError, setHttpError] = useState(null);
+
+    useEffect(() => {
+
+        const fetchMeals = async () => {
+            setIsLoading(true);
+            const response = await fetch('https://react-the-complete-guide-915ce-default-rtdb.europe-west1.firebasedatabase.app/means.json')
+
+            if (!response.ok) {
+                throw new Error('Something went wrong!!!')
+            }
+
+
+           const responseData = await response.json();
+
+            const loadedMeals = [];
+            for (const key in responseData) {
+                loadedMeals.push({
+                    id: key,
+                    name: responseData[key].name,
+                    description: responseData[key].description,
+                    price: responseData[key].price
+                });
+            }
+
+            console.log(loadedMeals)
+            setMeals(loadedMeals);
+            setIsLoading(false);
+
+        }
+            fetchMeals().catch(error => {
+                setHttpError(error.message)
+                setIsLoading(false);
+
+            });
+
+    }, []);
+
+    if (httpError) {
+        return <p className={classes.httpError}>{httpError}</p>
+    }
+
+    if (isLoading) {
+        return <p className={classes.mealsLoading}>Loading ...</p>
+    }
+
     const mealsItemsElements =
         //DUMMY_MEALS.map(y =>  <li key={y.id}>{y.name}</li>)
-        DUMMY_MEALS.map(y =>
+        meals.map(y =>
             <MealItem
                 key={y.id}
                 id={y.id}
@@ -54,5 +107,6 @@ const AvailableMeals = (props) => {
         </section>
     );
 }
+
 
 export default AvailableMeals;
