@@ -2,8 +2,9 @@ import {useContext, useRef, useState} from 'react';
 
 import classes from './AuthForm.module.css';
 import AuthContext from "../../store/auth-context";
+import {API_KEY} from "../configs";
 
-const API_KEY = 'AIzaSyC8YjjYdrNM21bZHt171FW0Uh96VtxqbXk';
+//const API_KEY = 'AIzaSyC8YjjYdrNM21bZHt171FW0Uh96VtxqbXk';
 
 const AuthForm = () => {
     const emailInputRef = useRef();
