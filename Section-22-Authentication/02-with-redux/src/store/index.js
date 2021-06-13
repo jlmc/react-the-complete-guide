@@ -1,5 +1,6 @@
 import {configureStore} from "@reduxjs/toolkit";
 import authSlice from "./auth-slice";
+import {saveState} from "./local-storaging";
 
 const store =
     configureStore({
@@ -12,3 +13,11 @@ const store =
 
 
 export default store;
+
+
+
+store.subscribe(() => {
+
+    saveState(store.getState())
+
+})

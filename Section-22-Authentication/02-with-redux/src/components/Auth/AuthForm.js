@@ -3,11 +3,13 @@ import {useRef, useState} from 'react';
 import classes from './AuthForm.module.css';
 
 import {useDispatch, useSelector} from "react-redux";
-import {login} from "../../store/auth-actions";
+import {login, signUp} from "../../store/auth-actions";
+import { useHistory } from 'react-router-dom';
 
 const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true);
 
+    const history = useHistory();
     const dispatch = useDispatch();
     const isLoading = useSelector(state => state.auth.isInLogginProcess)
 
@@ -23,7 +25,31 @@ const AuthForm = () => {
 
         const username = usernameInputRef.current.value;
         const password = passwordInputRef.current.value;
-        dispatch(login({username: username, password: password}))
+
+        if (isLogin) {
+            dispatch(login({username: username, password: password})).then((data) => {
+                console.log( data )
+                if (data.meta.requestStatus === 'fulfilled') {
+                    history.replace('/');
+                } else if (data.meta.requestStatus === 'rejected') {
+                    alert(data.error.message);
+                }
+
+
+            })
+        } else {
+            dispatch(signUp({username: username, password: password})).then((data) => {
+                console.log( data )
+                if (data.meta.requestStatus === 'fulfilled') {
+                    history.replace('/');
+                } else if (data.meta.requestStatus === 'rejected') {
+                    alert(data.error.message);
+                }
+            })
+        }
+
+
+
     };
 
     return (

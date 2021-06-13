@@ -1,73 +1,66 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {login} from "./auth-actions";
+import {login, signUp} from "./auth-actions";
+import {loadState} from "./local-storaging";
+
+const defaultInitialState = {token: '', expiresIn: -1, isLoggedIn: false, isInLogginProcess: false};
+
+const isS = () => {
+    let loadState1 = loadState();
+    if (loadState1 === undefined) {
+        return defaultInitialState;
+    }
+
+    return loadState1.auth;
+}
 
 const authSlice =
     createSlice({
         name: "auth",
-        initialState: {token: '', isLoggedIn: false, isInLogginProcess: false},
+        initialState: isS(),
         reducers: {
-            /*
-            login(status, action) {
-                status.isInLogginProcess = true;
-
-
-                const payload = action.payload;
-                console.log('---> ' + payload);
-
-
-                login(payload.username, payload.password)
-                    .then(idToken => {
-
-                        status.isInLogginProcess = false;
-                        status.token = idToken;
-                        status.isLoggedIn = true;
-
-
-                    })
-                    .catch(error => {
-                        status.isInLogginProcess = false;
-                    })
-
-
-            },
-            loginSuccessfully(state, action) {
-                console.log(`LOGIN  : ${JSON.stringify(state)}`)
-                console.log(`LOGIN action : ${JSON.stringify(action)}`)
-
-            },
-            loginUnSuccessfully(state, action) {
-                console.log(`LOGIN Successfully  : ${JSON.stringify(state)}`)
-                console.log(`LOGIN Successfully action : ${JSON.stringify(action)}`)
-
-            },
-
             logout(state, action) {
-                console.log(`LOGOUT  : ${JSON.stringify(state)}`)
-                console.log(`LOGOUT action : ${JSON.stringify(action)}`)
+                state.isInLogginProcess = false;
+                state.isLoggedIn = false;
+                state.token = null;
+                state.expiresIn = -1;
             }
-
-             */
         },
         extraReducers: {
+            // login
             [login.pending]: (state, action) => {
-               console.log("-----> pending")
                 state.isInLogginProcess = true;
                 state.isLoggedIn = false;
             },
             [login.fulfilled]: (state, action) => {
                 state.isInLogginProcess = false;
+                state.isLoggedIn = true;
 
-                state.token = action.id
-
-                state.isInLogginProcess = false;
-                    console.log("----->  fulfilled")
+                state.token = action.payload.idToken;
+                state.expiresIn = action.payload.expiresIn;
+                console.log(action.payload)
+                console.log(action.payload.expiresIn)
             },
             [login.rejected]: (state, action) => {
                 state.isInLogginProcess = false;
                 state.isLoggedIn = false;
-                    console.log("----->  rejected")
             },
 
+            // signIn
+            [signUp.pending]: (state, action) => {
+                state.isInLogginProcess = true;
+            },
+            [signUp.fulfilled]: (state, action) => {
+                state.isInLogginProcess = false;
+                state.isLoggedIn = true;
+                state.token = action.payload.idToken
+                state.expiresIn = action.payload.expiresIn
+
+                console.log(action.payload)
+                console.log(action.payload.expiresIn)
+            },
+            [signUp.rejected]: (state, action) => {
+                state.isInLogginProcess = false;
+            }
         }
 
 
