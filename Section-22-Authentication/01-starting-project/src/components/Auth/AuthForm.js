@@ -12,7 +12,7 @@ const AuthForm = () => {
     const passwordInputRef = useRef();
 
 
-    const useHistory = useHistory();
+    const history = useHistory();
     const authCtx = useContext(AuthContext);
 
     const [isLogin, setIsLogin] = useState(true);
@@ -71,7 +71,7 @@ const AuthForm = () => {
         .then((data) => {
                 console.log('Login success: ' + data);
 
-                authCtx.login(data.idToken)
+                authCtx.login(data.idToken, data.expiresIn)
                 history.replace('/');
 
             })
