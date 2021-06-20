@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import Todo, {todoOf} from "../models/Todo";
+import React, {useState} from "react";
 
 
 type TodosContextObj = {
@@ -10,8 +10,10 @@ type TodosContextObj = {
 
 export const TodosContext = React.createContext<TodosContextObj>({
     items: [],
-    addTodo: () => {},
-    removeTodo: (id: string) => {},
+    addTodo: () => {
+    },
+    removeTodo: (id: string) => {
+    },
 });
 
 const TodosContextProvider: React.FC = (props) => {
@@ -20,7 +22,7 @@ const TodosContextProvider: React.FC = (props) => {
     const addTodoHandler = (todoText: string) => {
         const newTodo = todoOf(todoText);
 
-        console.log("adding todo in cxt: " + JSON.stringify(newTodo))
+        console.log("+++")
 
         setTodos((prevTodos) => {
             return prevTodos.concat(newTodo);
@@ -28,8 +30,6 @@ const TodosContextProvider: React.FC = (props) => {
     };
 
     const removeTodoHandler = (todoId: string) => {
-
-        console.log("removing todo in cxt: " + JSON.stringify(todoId))
         setTodos((prevTodos) => {
             return prevTodos.filter((todo) => todo.id !== todoId);
         });
