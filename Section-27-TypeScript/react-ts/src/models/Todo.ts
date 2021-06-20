@@ -7,6 +7,12 @@ class Todo {
         this.id = id;
         this.text = text;
     }
+
+
+}
+
+export function todoOf(title: string): Todo {
+    return new Todo('' + Math.random(), title);
 }
 
 export default Todo;

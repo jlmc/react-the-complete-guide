@@ -1,29 +1,35 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import Todos from "./components/Todos";
-import Todo from "./models/Todo";
+import Todo, {todoOf} from "./models/Todo";
 import NewTodo from "./components/NewTodo";
 
 
-
 function App() {
-
-    const todos = [
-
-        new Todo('' + Math.random(), "Learn React"),
-        new Todo('' + Math.random(), "Learn Type Script"),
-    ];
+    const [todos, setTodos] = useState<Todo[]>([]);
 
     const addTodoHandler = (todoText: string) => {
         console.log("---> " + todoText)
+        const newTodo = todoOf(todoText);
+        setTodos((prevTodos) => {
+            return prevTodos.concat(newTodo);
+        });
     };
 
-  return (
-    <div className="App">
-      <NewTodo onAddTodo={addTodoHandler} />
-      <Todos items={todos}/>
-    </div>
-  );
+    useEffect(() => {
+        const initialTodos = [
+            todoOf("Learn React"),
+            todoOf("Learn Type Script")];
+
+        setTodos((prevState) => initialTodos);
+    }, [])
+
+    return (
+        <div className="App">
+            <NewTodo onAddTodo={addTodoHandler}/>
+            <Todos items={todos}/>
+        </div>
+    );
 }
 
 export default App;
