@@ -1,11 +1,10 @@
-
 class Todo {
     id: string;
     text: string;
 
 
-    constructor(text: string) {
-        this.id = new Date().toISOString();
+    constructor(id: string, text: string) {
+        this.id = id;
         this.text = text;
     }
 }
