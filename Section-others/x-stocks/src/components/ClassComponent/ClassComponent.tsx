@@ -2,6 +2,11 @@ import React from 'react';
 
 class ClassComponent extends React.Component<{ name: string }> {
 
+    constructor(props: any) {
+        super(props);
+        console.log("ClassComponent - constructor!")
+    }
+
     state = {
         name: "folks - " + this.props.name,
         ch: true
@@ -23,7 +28,20 @@ class ClassComponent extends React.Component<{ name: string }> {
         }
     }
 
+    componentDidMount() {
+        console.log("ClassComponent - componentDidMount!")
+    }
+
+    componentDidUpdate(prevProps: Readonly<{ name: string }>, prevState: Readonly<{}>, snapshot?: any) {
+        console.log("ClassComponent - componentDidUpdate!")
+    }
+
+    componentWillUnmount() {
+        console.log("ClassComponent - componentWillUnmount!")
+    }
+
     render() {
+        console.log("ClassComponent - render!")
         return (
             <div>
                 <h5>I'm just one component based in class</h5>
