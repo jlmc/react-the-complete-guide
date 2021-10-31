@@ -1,12 +1,11 @@
 import React from 'react';
 import './App.css';
+import SimpleComponent from "../SimpleComponent";
 
 function App() {
   return (
-    <div className="App">
-
-      Hello boy !!!
-
+    <div>
+      <SimpleComponent/>
     </div>
   );
 }
