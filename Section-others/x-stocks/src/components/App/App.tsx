@@ -1,15 +1,17 @@
 import React from 'react';
-import './App.css';
-import SimpleComponent from "../SimpleComponent";
-import ClassComponent from "../ClassComponent";
+// import SimpleComponent from "../SimpleComponent";
+// import ClassComponent from "../ClassComponent";
 import FunctionalComponent from "../FunctionComponent";
+import Header from "../Header";
 
 function App() {
-  return (
-    <div>
-      <FunctionalComponent name="Jack"/>
-    </div>
-  );
+    return (
+        <div>
+            <Header title="x-stocks"/>
+
+            <FunctionalComponent name="Jack"/>
+        </div>
+    );
 }
 
 export default App;
