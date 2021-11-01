@@ -6,6 +6,7 @@ import Header from "../Header";
 import Button from "../shared/Button";
 import Container from "../shared/Container";
 import Input from "../shared/Input";
+import Table from "../shared/Table/Table";
 
 function TestComponent() {
     return <img width="16" src="https://img.icons8.com/pastel-glyph/2x/search--v2.png" alt="search icon"/>
@@ -18,6 +19,8 @@ function App() {
         <div>
             <Header title="x-stocks"/>
             <Container>
+
+                <Table/>
 
                 <Input label="Street"
                        placeholder="5 Cesamo Street"
