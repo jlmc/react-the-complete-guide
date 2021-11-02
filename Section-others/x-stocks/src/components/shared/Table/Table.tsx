@@ -1,55 +1,28 @@
 import React from "react";
 import './Table.scss'
-import Products from "./Table.mockdata";
+import {IndexedHeaders, organizeData, OrganizedItem} from "./organizeData";
 
-const headers: TableHeader[] = [
-    { key: 'id', value: '#' },
-    { key: 'name', value: 'Product' },
-    { key: 'price', value: 'Price', right: true },
-    { key: 'stock', value: 'Available Stock', right: true }
-]
-
-declare interface TableHeader {
+export declare interface TableHeader {
     key: string
     value: string
     right?: boolean
 }
 
-type IndexedHeaders = {
-    [key: string]: TableHeader
+declare interface TableProps {
+    headers: TableHeader[],
+    data: any[],
+
+    enableActions?: boolean
+
+    onDelete?: (item: any) => void
+    onDetail?: (item: any) => void
+    onEdit?: (item: any) => void
 }
 
-type OrganizedItem = {
-    [key: string]: any
-}
+const Table: React.FC<TableProps> = (props, context) => {
 
-function organizeData(data: any[], headers: TableHeader[]): [OrganizedItem[], IndexedHeaders] {
-    const indexedHeaders: IndexedHeaders = {}
-
-    headers.forEach(header => {
-        indexedHeaders[header.key] = { ...header }
-    })
-
-    const headerKeysInOrder = Object.keys(indexedHeaders)
-
-    const organizedData = data.map(item => {
-        const organizedItem: OrganizedItem = {}
-
-        headerKeysInOrder.forEach(key => {
-            organizedItem[key] = item[key]
-        })
-
-        organizedItem.$original = item
-
-        return organizedItem
-    })
-
-    return [organizedData, indexedHeaders]
-}
-
-const Table: React.FC = (props, context) => {
-
-    const [organizedData, indexedHeaders]: [OrganizedItem[], IndexedHeaders] = organizeData(Products, headers);
+    //const [organizedData, indexedHeaders]: [OrganizedItem[], IndexedHeaders] = organizeData(Products, headers);
+    const [organizedData, indexedHeaders]: [OrganizedItem[], IndexedHeaders] = organizeData(props.data, props.headers);
 
     console.table(organizedData)
     console.table(indexedHeaders)
@@ -59,7 +32,7 @@ const Table: React.FC = (props, context) => {
             <thead>
             <tr>
                 {
-                    headers.map(header =>
+                    props.headers.map(header =>
                         <th
                             className={header.right ? 'right' : ''}
                             key={header.key}
