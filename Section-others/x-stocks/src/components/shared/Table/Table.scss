@@ -35,4 +35,10 @@ table.Table {
       }
     }
   }
+  .actions {
+    > *:not(:last-child) {
+      // first item that is not the last child
+      margin-right: 5px;
+    }
+  }
 }

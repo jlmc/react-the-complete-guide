@@ -1,6 +1,7 @@
 import React from "react";
 import './Table.scss'
 import {IndexedHeaders, organizeData, OrganizedItem} from "./organizeData";
+import Button from "../Button";
 
 export declare interface TableHeader {
     key: string
@@ -24,8 +25,8 @@ const Table: React.FC<TableProps> = (props, context) => {
     //const [organizedData, indexedHeaders]: [OrganizedItem[], IndexedHeaders] = organizeData(Products, headers);
     const [organizedData, indexedHeaders]: [OrganizedItem[], IndexedHeaders] = organizeData(props.data, props.headers);
 
-    console.table(organizedData)
-    console.table(indexedHeaders)
+    //console.table(organizedData)
+    //console.table(indexedHeaders)
 
     return <React.Fragment>
         <table className="Table">
@@ -40,6 +41,9 @@ const Table: React.FC<TableProps> = (props, context) => {
                             {header.value}
                         </th>
                     )
+                }
+                {
+                    props.enableActions && <th className="right">Actions</th>
                 }
             </tr>
             </thead>
@@ -56,10 +60,36 @@ const Table: React.FC<TableProps> = (props, context) => {
                                             key={row.$original.id + i}
                                             className={indexedHeaders[item].right ? 'right' : ''}
                                         >
-                                            { row[item] }
+                                            {row[item]}
                                         </td>
                                         : null
                                 )
+                        }
+                        {
+                            props.enableActions
+                            && <td className='right actions'>
+                                {
+                                    props.onEdit
+                                    && <Button
+                                        onClick={() => props.onEdit && props.onEdit(row)}>
+                                        Edit
+                                    </Button>
+                                }
+                                {
+                                    props.onDetail
+                                    && <Button
+                                        onClick={() => props.onDetail && props.onDetail(row)}>
+                                        Detail
+                                    </Button>
+                                }
+                                {
+                                    props.onDelete
+                                    && <Button
+                                        onClick={() => props.onDelete && props.onDelete(row)}>
+                                        Delete
+                                    </Button>
+                                }
+                            </td>
                         }
                     </tr>
                 })

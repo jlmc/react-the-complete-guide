@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Form from "../shared/Form";
 import Input from "../shared/Input";
 import Button from "../shared/Button";
@@ -21,6 +21,7 @@ export interface ProductFormProps {
     product?: Product
     onSubmit?: (product: ProductCreator) => void
     onUpdate?: (product: ProductUpdater) => void
+    onCancel?: () => void
 }
 
 declare interface InitialFormState {
@@ -30,53 +31,32 @@ declare interface InitialFormState {
     stock: string
 }
 
+function buildInitialState(product?: Product): InitialFormState {
+    return product ? {
+            id: product.id,
+            name: product.name,
+            price: String(product.price),
+            stock: String(product.stock),
+        }
+        : {
+            name: '',
+            price: '',
+            stock: ''
+        }
+}
+
 const ProductForm: React.FC<ProductFormProps> = (props) => {
 
-    const getInitialFormState = (product?: Product) => {
-        return product ?
-            {
-                id: product.id,
-                name: product.name,
-                price: String(product.price),
-                stock: String(product.stock)
-            }
-            : {
-                name: '',
-                price: '',
-                stock: ''
-            };
-    }
-
-    const initialFormState: InitialFormState = getInitialFormState(props.product)
+    //const initialFormState: InitialFormState = getInitialFormState(props.product)
+    const initialFormState: InitialFormState = buildInitialState(props.product)
 
     const [form, setForm] = useState(initialFormState);
 
-    function onFormUpdate(event: React.FormEvent<HTMLFormElement>) {
-        if (!props.product) return
 
-        const productUpdater: ProductUpdater = {
-            id: props.product.id,
-            name: String(form.name),
-            price: parseFloat(form.price),
-            stock: Number(form.stock)
-        };
-
-        props.onUpdate && props.onUpdate(productUpdater)
-
+    useEffect(() => {
         setForm(initialFormState)
-    }
+    }, [props.product])
 
-    function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
-        const productCreator: ProductCreator = {
-            name: String(form.name),
-            price: parseFloat(form.price),
-            stock: Number(form.stock)
-        };
-
-        props.onSubmit && props.onSubmit(productCreator)
-
-        setForm(initialFormState)
-    }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {value, name}: EventTarget & HTMLInputElement = event.target
@@ -87,8 +67,40 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
         })
     }
 
+    const handleFormOnSubmit = () => {
+        form.id
+            ? updateProduct(form)
+            : createProduct(form)
+    }
+
+    const updateProduct = (formState: InitialFormState) => {
+        const productDto = {
+            id: Number(formState.id),
+            name: String(formState.name),
+            price: parseFloat(formState.price),
+            stock: Number(formState.stock),
+        }
+
+        props.onUpdate && props.onUpdate(productDto)
+
+        //setForm(buildInitialState(undefined))
+    }
+
+    const createProduct = (formState: InitialFormState) => {
+        const productDto = {
+            name: String(formState.name),
+            price: parseFloat(formState.price),
+            stock: Number(formState.stock)
+        }
+
+        props.onSubmit && props.onSubmit(productDto)
+
+        //setForm(buildInitialState(undefined))
+    }
+
     return <React.Fragment>
-        <Form title="Product details" onSubmit={props.product ? onFormUpdate : onFormSubmit}>
+        <Form title="Product details"
+              onSubmit={handleFormOnSubmit}>
             <Input label="Name"
                    value={form.name}
                    required
@@ -110,7 +122,14 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
                    step="0.01"
                    placeholder="0"
                    name="stock" onChange={handleInputChange}/>
-            <Button>Save</Button>
+            <Button>
+                {
+                    form.id ? 'Update' : 'Add'
+                }
+            </Button>
+            {
+                props.onCancel && <Button onClick={props.onCancel}>Cancel</Button>
+            }
         </Form>
     </React.Fragment>
 }
