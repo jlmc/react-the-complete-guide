@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2'
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 // import SimpleComponent from "../SimpleComponent";
 // import ClassComponent from "../ClassComponent";
 //import FunctionalComponent from "../FunctionComponent";
@@ -9,6 +9,7 @@ import Container from "../shared/Container";
 import Table, {TableHeader} from "../shared/Table";
 import Products, {Product} from "../shared/Table/Table.mockdata";
 import ProductForm from "../Products/ProductForm";
+import {getAllProducts} from "../../service/Products.service";
 
 // function TestComponent() {
 //     return <img width="16" src="https://img.icons8.com/pastel-glyph/2x/search--v2.png" alt="search icon"/>
@@ -21,12 +22,23 @@ const headers: TableHeader[] = [
     {key: 'stock', value: 'Available Stock', right: true}
 ]
 
+
 function App() {
     //const [street, setStreet] = useState('')
 
-    const [products, setProducts] = useState(Products);
+    const [products, setProducts] = useState<Product[]>([]);
     //const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(products[0])
     const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined)
+
+    // only on the creation
+    useEffect(() => {
+       async function fetchData() {
+           const _products = await getAllProducts()
+           setProducts(_products)
+       }
+       fetchData()
+    }, [])
+
 
     const handleFormProductUpdate = (otherProduct: Product) => {
         const products1: Product[] = products.map(product => product.id === otherProduct.id ? otherProduct : product);
