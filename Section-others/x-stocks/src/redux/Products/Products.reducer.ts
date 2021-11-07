@@ -1,7 +1,6 @@
 import Products from "../../components/shared/Table/Table.mockdata";
 import {Product} from "../../model/Product";
-import {uuid} from "../../utils";
-import {DELETE_EXISTING_PRODUCT, GET_PRODUCTS, INSERT_NEW_PRODUCT, UPDATE_EXISTING_PRODUCT} from "./Products.actions";
+import {GET_PRODUCTS } from "./Products.actions";
 import {Action} from "../index";
 
 // 1. first we create the redux reducer
@@ -12,6 +11,7 @@ export default function (state: Product[] = Products, action: Action): Product[]
             const ps = action.payload as Product[]
             return [...ps]
 
+        /*
         case INSERT_NEW_PRODUCT:
 
             let newProduct = {
@@ -37,6 +37,7 @@ export default function (state: Product[] = Products, action: Action): Product[]
 
             return state.filter(it => it._id !== productId);
 
+         */
         default:
             return state
     }
