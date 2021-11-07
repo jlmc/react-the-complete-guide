@@ -94,10 +94,6 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
         //setForm(buildInitialState(undefined))
     }
 
-    function handleCancel() {
-        props.onCancel && props.onCancel()
-    }
-
     return <React.Fragment>
         <Form title="Product details"
               onSubmit={handleFormOnSubmit} >
