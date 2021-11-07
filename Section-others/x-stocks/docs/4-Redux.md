@@ -208,3 +208,8 @@ $ yarn add redux-thunk
 ```
 redux-thunk@2.4.0
 ```
+
+
+###
+
+- documentation: https://redux-toolkit.js.org/usage/usage-with-typescript

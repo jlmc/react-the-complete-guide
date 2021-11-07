@@ -34,7 +34,7 @@ export function questionCallbackAlert(props: QuestionCallbackAlertProps) {
                 try {
                     props.chain()
 
-                    successAlert(props.successText, props.successTitle)
+                    //successAlert(props.successText, props.successTitle)
 
                 } catch (e) {
                     const message = `Some unexpected Error happens, ${isAnErrorInstance(e)? (e as Error).message : e}`
@@ -55,7 +55,4 @@ export interface QuestionCallbackAlertProps {
     confirmButtonText: string
 
     chain: () => void
-
-    successTitle: string
-    successText: string
 }
