@@ -57,10 +57,11 @@ const Table: React.FC<TableProps> = (props, context) => {
                                 .map((item: string, itemIndex: number) =>
                                     item !== '$original'
                                         ? <td
+
                                             key={`${row.$original._id}-${itemIndex}`}
                                             className={indexedHeaders[item].right ? 'right' : ''}
                                         >
-                                            {row[item]}
+                                            <label hidden={itemIndex === 0}>{row[item]}</label>
                                         </td>
                                         : null
                                 )
