@@ -1,16 +1,12 @@
-import Swal from 'sweetalert2'
+```
+import Swal, {SweetAlertIcon} from 'sweetalert2'
 
 import React, {useEffect, useState} from 'react';
 import Header from "../Header";
 import Container from "../shared/Container";
 import Table, {TableHeader} from "../shared/Table";
 import ProductForm from "../Products/ProductForm";
-import {
-    createSingleProduct,
-    deleteSingleProduct,
-    getAllProducts,
-    updateSingleProduct
-} from "../../service/Products.service";
+import {createSingleProduct, getAllProducts} from "../../service/Products.service";
 import {Product} from "../../model/Product";
 import {ProductCreator} from "../../model/ProductCreator";
 
@@ -54,25 +50,17 @@ function App() {
     /**
      * on form update action handle
      */
-    /*
-    // Local only implementation
-    const handleFormProductUpdate2 = (otherProduct: Product) => {
+    const handleFormProductUpdate = (otherProduct: Product) => {
         console.log(otherProduct)
+
+        /*   const productOToUpdate: Product | undefined =
+               products.find(it => it._id === otherProduct._id);*/
+
         const products1: Product[] =
             products.map(product => product._id === otherProduct._id ? otherProduct : product);
         setProducts(products1)
+
         setSelectedProduct(newEmptyProduct())
-    }
-    */
-    const handleFormProductUpdate = async (otherProduct: Product) => {
-        try {
-            await updateSingleProduct(otherProduct)
-            setSelectedProduct(newEmptyProduct())
-            fetchData()
-        } catch (err) {
-            let message = `Some problem happen: ${err}`
-            Swal.fire('Oops!', message, 'error')
-        }
     }
 
     /**
@@ -99,14 +87,15 @@ function App() {
                 stock: otherProduct.stock
             };
             await createSingleProduct(newProductCreator)
-            setSelectedProduct(newEmptyProduct())
             fetchData()
 
         } catch (err) {
             let message = `Some problem happen: ${err}`
             Swal.fire('Oops!', message, 'error')
         }
+
     }
+
 
     /**
      * on table edit handle
@@ -141,24 +130,8 @@ function App() {
             })
     }
 
-    /*
-    // Local only implementation
     const deleteProduct = (productId?: string) => {
         setProducts(products.filter(product => product._id !== productId))
-    }
-     */
-
-    const deleteProduct = async (productId?: string) => {
-        if (productId) {
-            try {
-                await deleteSingleProduct(productId)
-                fetchData()
-                Swal.fire('Uhul!', 'Product successfully deleted', 'success')
-            } catch (err) {
-                let message = `Some problem happen: ${err}`
-                Swal.fire('Oops!', message, 'error')
-            }
-        }
     }
 
     const handleProductDetail = (product: Product) => {
@@ -198,3 +171,4 @@ function App() {
 }
 
 export default App;
+```
