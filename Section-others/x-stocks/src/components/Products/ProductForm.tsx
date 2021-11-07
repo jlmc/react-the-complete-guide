@@ -3,19 +3,8 @@ import Form from "../shared/Form";
 import Input from "../shared/Input";
 import Button from "../shared/Button";
 import {Product} from "../../model/Product";
-
-export interface ProductCreator {
-    name: string
-    price: number,
-    stock: number
-}
-
-export interface ProductUpdater {
-    _id: string,
-    name: string
-    price: number,
-    stock: number
-}
+import {ProductCreator} from "../../model/ProductCreator";
+import {ProductUpdater} from "../../model/ProductUpdater";
 
 export interface ProductFormProps {
     product?: Product
@@ -130,8 +119,8 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
                    value={form.stock}
                    required type="number"
                    min="0"
-                   step="0.01"
-                   placeholder="0"
+                   step="1"
+                   placeholder="1"
                    name="stock" onChange={handleInputChange}/>
             <Button>
                 {
