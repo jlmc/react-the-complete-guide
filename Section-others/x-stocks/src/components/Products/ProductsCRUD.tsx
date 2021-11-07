@@ -3,14 +3,10 @@ import Table, {TableHeader} from "../shared/Table";
 import ProductForm from "./ProductForm";
 import {Product} from "../../model/Product";
 import Swal from "sweetalert2";
-import {
-    createSingleProduct,
-    deleteSingleProduct,
-    getAllProducts,
-    updateSingleProduct
-} from "../../service/Products.service";
+import {deleteSingleProduct, updateSingleProduct} from "../../service/Products.service";
 import {ProductCreator} from "../../model/ProductCreator";
-import {connect} from "react-redux";
+import {connect, useDispatch} from "react-redux";
+import {insertNewProduct} from "../../redux/Products/Products.actions";
 
 const headers: TableHeader[] = [
     {key: '_id', value: '#'},
@@ -28,7 +24,7 @@ const newEmptyProduct = (): Product => ({
     updatedAt: undefined
 });
 
-declare interface  ProductsCRUDProps {
+declare interface ProductsCRUDProps {
     products: Product[]
 
 }
@@ -39,6 +35,7 @@ const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
     //const [products, setProducts] = useState<Product[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(newEmptyProduct())
 
+    const dispatch = useDispatch();
 
     // only on the creation
     useEffect(() => {
@@ -121,14 +118,14 @@ const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
 
     const handleFormProductAdd = async (otherProduct: ProductCreator) => {
         try {
+
             const newProductCreator: ProductCreator = {
                 name: otherProduct.name,
                 price: otherProduct.price,
                 stock: otherProduct.stock
             };
-            await createSingleProduct(newProductCreator)
-            setSelectedProduct(newEmptyProduct())
-            fetchData()
+
+            dispatch(insertNewProduct(newProductCreator))
 
         } catch (err) {
             let message = `Some problem happen: ${err}`

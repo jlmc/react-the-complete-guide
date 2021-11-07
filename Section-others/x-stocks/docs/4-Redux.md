@@ -188,3 +188,8 @@ new file mode 100644
 https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=pt-BR
 
 https://github.com/zalmoxisus/redux-devtools-extension
+
+
+## 4.5. Fire redux actions from components
+
+- [Fire redux actions from components](https://redux.js.org/tutorials/fundamentals/part-2-concepts-data-flow)
