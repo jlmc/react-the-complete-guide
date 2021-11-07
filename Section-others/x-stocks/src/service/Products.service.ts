@@ -1,5 +1,5 @@
 import Http from '../http/http';
-import {Product} from "../components/shared/Table/Table.mockdata";
+import {Product} from "../model/Product";
 
 
 export const getAllProducts = () =>

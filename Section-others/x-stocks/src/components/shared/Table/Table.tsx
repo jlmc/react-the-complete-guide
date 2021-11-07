@@ -49,15 +49,15 @@ const Table: React.FC<TableProps> = (props, context) => {
             </thead>
             <tbody>
             {
-                organizedData.map((row, i) => {
-                    return <tr key={i}>
+                organizedData.map((row: OrganizedItem, rowIndex: number) => {
+                    return <tr key={rowIndex}>
                         {
                             Object
                                 .keys(row)
-                                .map((item, i) =>
+                                .map((item: string, itemIndex: number) =>
                                     item !== '$original'
                                         ? <td
-                                            key={row.$original.id + i}
+                                            key={`${row.$original._id}-${itemIndex}`}
                                             className={indexedHeaders[item].right ? 'right' : ''}
                                         >
                                             {row[item]}

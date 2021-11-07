@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import Form from "../shared/Form";
 import Input from "../shared/Input";
 import Button from "../shared/Button";
-import {Product} from "../shared/Table/Table.mockdata";
+import {Product} from "../../model/Product";
 
 export interface ProductCreator {
     name: string
@@ -11,7 +11,7 @@ export interface ProductCreator {
 }
 
 export interface ProductUpdater {
-    id: number,
+    _id: string,
     name: string
     price: number,
     stock: number
@@ -25,20 +25,23 @@ export interface ProductFormProps {
 }
 
 declare interface InitialFormState {
-    id?: number,
+    _id?: string,
     name: string,
     price: string,
     stock: string
+
+
 }
 
 function buildInitialState(product?: Product): InitialFormState {
-    return product ? {
-            id: product.id,
+    return product && product._id ? {
+            _id: product._id,
             name: product.name,
             price: String(product.price),
             stock: String(product.stock),
         }
         : {
+            _id: undefined,
             name: '',
             price: '',
             stock: ''
@@ -54,6 +57,9 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
 
 
     useEffect(() => {
+
+        console.log(`===> ${Date.now()} - ON set FORM DATA: ${JSON.stringify(initialFormState)}`)
+
         setForm(initialFormState)
     }, [props.product])
 
@@ -68,21 +74,22 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
     }
 
     const handleFormOnSubmit = () => {
-        form.id
+        form._id
             ? updateProduct(form)
             : createProduct(form)
     }
 
     const updateProduct = (formState: InitialFormState) => {
-        const productDto = {
-            id: Number(formState.id),
-            name: String(formState.name),
-            price: parseFloat(formState.price),
-            stock: Number(formState.stock),
+        if (formState._id && props.onUpdate) {
+            const s: ProductUpdater = {
+                _id: formState._id,
+                name: String(formState.name),
+                price: parseFloat(formState.price),
+                stock: Number(formState.stock)
+            }
+            props.onUpdate(s)
         }
-
-        props.onUpdate && props.onUpdate(productDto)
-
+        //props.onUpdate && props.onUpdate(productDto)
         //setForm(buildInitialState(undefined))
     }
 
@@ -98,9 +105,13 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
         //setForm(buildInitialState(undefined))
     }
 
+    function handleCancel() {
+        props.onCancel && props.onCancel()
+    }
+
     return <React.Fragment>
         <Form title="Product details"
-              onSubmit={handleFormOnSubmit}>
+              onSubmit={handleFormOnSubmit} >
             <Input label="Name"
                    value={form.name}
                    required
@@ -111,7 +122,7 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
                    value={form.price}
                    required
                    type="number"
-                   step="0.01"
+                   step="0.5"
                    placeholder="99.12"
                    name="price"
                    onChange={handleInputChange}/>
@@ -124,12 +135,9 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
                    name="stock" onChange={handleInputChange}/>
             <Button>
                 {
-                    form.id ? 'Update' : 'Add'
+                    form._id ? 'Update' : 'Add'
                 }
             </Button>
-            {
-                props.onCancel && <Button onClick={props.onCancel}>Cancel</Button>
-            }
         </Form>
     </React.Fragment>
 }
