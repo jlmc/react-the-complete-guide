@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Table, {TableHeader} from "../shared/Table";
 import ProductForm from "./ProductForm";
 import {Product} from "../../model/Product";
-import Swal from "sweetalert2";
-import {deleteSingleProduct, updateSingleProduct} from "../../service/Products.service";
 import {ProductCreator} from "../../model/ProductCreator";
 import {connect, useDispatch} from "react-redux";
-import {insertNewProduct} from "../../redux/Products/Products.actions";
+import {deleteExistingProduct, insertNewProduct, updateExistingProduct} from "../../redux/Products/Products.actions";
+import {errorAlert, infoAlert, questionCallbackAlert, successAlert} from "../shared/dialogs/Alerts";
 
 const headers: TableHeader[] = [
     {key: '_id', value: '#'},
@@ -31,66 +30,51 @@ declare interface ProductsCRUDProps {
 
 // React.FC<ProductFormProps> = (props
 const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
-
     //const [products, setProducts] = useState<Product[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(newEmptyProduct())
 
     const dispatch = useDispatch();
 
-    // only on the creation
-    useEffect(() => {
-        fetchData()
-    }, [])
-
-    async function fetchData() {
-        //const _products = await getAllProducts()
-        //setProducts(_products)
-    }
 
     /**
      * on table delete handle
      */
     const handleDeleteClick = (product: Product) => {
-        Swal
-            .fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#09f',
-                cancelButtonColor: '#d33',
-                confirmButtonText: `Yes, delete ${product.name}!`
-            })
-            .then((result) => {
-                if (result.value) {
-                    deleteProduct(product._id)
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    )
-                }
-            })
+
+        questionCallbackAlert({
+            questionTitle: 'Are you sure?',
+            questionText: "You won't be able to revert this!",
+            confirmButtonText: `Yes, delete ${product.name}!`,
+
+            chain: () => deleteProduct(product._id),
+
+            successTitle: "Deleted!",
+            successText: "Your file has been deleted."
+        })
     }
 
     const deleteProduct = async (productId?: string) => {
         if (productId) {
             try {
-                await deleteSingleProduct(productId)
-                fetchData()
-                Swal.fire('Uhul!', 'Product successfully deleted', 'success')
+
+                dispatch(deleteExistingProduct(productId))
+
+                resetFormProducts()
+
+                successAlert('Product successfully deleted')
+
             } catch (err) {
                 let message = `Some problem happen: ${err}`
-                Swal.fire('Oops!', message, 'error')
+                errorAlert(message)
             }
         }
     }
 
     const handleProductDetail = (product: Product) => {
-        Swal.fire(
-            'Product details',
+
+        infoAlert(
             `${product.name} costs $${product.price} and we have ${product.stock} available in stock.`,
-            'info'
+            'Product details',
         )
     }
 
@@ -107,12 +91,13 @@ const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
 
     const handleFormProductUpdate = async (otherProduct: Product) => {
         try {
-            await updateSingleProduct(otherProduct)
+
+            dispatch(updateExistingProduct(otherProduct))
             resetFormProducts()
-            fetchData()
+
         } catch (err) {
             let message = `Some problem happen: ${err}`
-            Swal.fire('Oops!', message, 'error')
+            errorAlert(message)
         }
     }
 
@@ -127,9 +112,11 @@ const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
 
             dispatch(insertNewProduct(newProductCreator))
 
+            resetFormProducts()
+
         } catch (err) {
             let message = `Some problem happen: ${err}`
-            Swal.fire('Oops!', message, 'error')
+            errorAlert(message)
         }
     }
 
