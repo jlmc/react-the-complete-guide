@@ -1,11 +1,14 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Table, {TableHeader} from "../shared/Table";
 import ProductForm from "./ProductForm";
 import {Product} from "../../model/Product";
 import {ProductCreator} from "../../model/ProductCreator";
 import {connect, useDispatch} from "react-redux";
-import {deleteExistingProduct, insertNewProduct, updateExistingProduct} from "../../redux/Products/Products.actions";
+
+import * as ProductsAction from '../../redux/Products/Products.actions'
+
 import {errorAlert, infoAlert, questionCallbackAlert, successAlert} from "../shared/dialogs/Alerts";
+import {RootState, ThunkDispatch} from "../../redux";
 
 const headers: TableHeader[] = [
     {key: '_id', value: '#'},
@@ -32,46 +35,39 @@ declare interface ProductsCRUDProps {
 const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
     //const [products, setProducts] = useState<Product[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(newEmptyProduct())
+    const dispatch: ThunkDispatch = useDispatch();
 
-    const dispatch = useDispatch();
+    useEffect(() => {
+        fetchData()
+    }, [])
 
+    async function fetchData() {
+        await dispatch(ProductsAction.getProducts())
+            .catch(handlerUnexpectedError)
+    }
+
+    const handlerUnexpectedError = (e:unknown) => errorAlert(`Unexpected Error happens: ${e}`)
 
     /**
      * on table delete handle
      */
-    const handleDeleteClick = (product: Product) => {
-
+    const handleProductDelete = (product: Product) => {
         questionCallbackAlert({
             questionTitle: 'Are you sure?',
             questionText: "You won't be able to revert this!",
             confirmButtonText: `Yes, delete ${product.name}!`,
 
-            chain: () => deleteProduct(product._id),
-
-            successTitle: "Deleted!",
-            successText: "Your file has been deleted."
+            chain: () => product._id && deleteProduct(product._id),
         })
     }
 
-    const deleteProduct = async (productId?: string) => {
-        if (productId) {
-            try {
-
-                dispatch(deleteExistingProduct(productId))
-
-                resetFormProducts()
-
-                successAlert('Product successfully deleted')
-
-            } catch (err) {
-                let message = `Some problem happen: ${err}`
-                errorAlert(message)
-            }
-        }
+    const deleteProduct = async (id: string) => {
+        await dispatch(ProductsAction.deleteExistingProduct(id))
+            .then(() => successAlert('Product successfully deleted'))
+            .catch(handlerUnexpectedError)
     }
 
     const handleProductDetail = (product: Product) => {
-
         infoAlert(
             `${product.name} costs $${product.price} and we have ${product.stock} available in stock.`,
             'Product details',
@@ -90,34 +86,21 @@ const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
     }
 
     const handleFormProductUpdate = async (otherProduct: Product) => {
-        try {
-
-            dispatch(updateExistingProduct(otherProduct))
-            resetFormProducts()
-
-        } catch (err) {
-            let message = `Some problem happen: ${err}`
-            errorAlert(message)
-        }
+        await dispatch(ProductsAction.updateExistingProduct(otherProduct))
+            .catch(handlerUnexpectedError)
+            .finally(resetFormProducts)
     }
 
     const handleFormProductAdd = async (otherProduct: ProductCreator) => {
-        try {
+        const newProductCreator: ProductCreator = {
+            name: otherProduct.name,
+            price: otherProduct.price,
+            stock: otherProduct.stock
+        };
 
-            const newProductCreator: ProductCreator = {
-                name: otherProduct.name,
-                price: otherProduct.price,
-                stock: otherProduct.stock
-            };
-
-            dispatch(insertNewProduct(newProductCreator))
-
-            resetFormProducts()
-
-        } catch (err) {
-            let message = `Some problem happen: ${err}`
-            errorAlert(message)
-        }
+        await dispatch(ProductsAction.insertNewProduct(newProductCreator))
+            .catch(handlerUnexpectedError)
+            .finally(resetFormProducts)
     }
 
     return (
@@ -126,7 +109,7 @@ const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
                 headers={headers}
                 data={props.products}
                 enableActions={true}
-                onDelete={handleDeleteClick}
+                onDelete={handleProductDelete}
                 onDetail={handleProductDetail}
                 onEdit={handleEditSelect}
             />
@@ -140,7 +123,7 @@ const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
     );
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
     return {
         products: state.products
     }
