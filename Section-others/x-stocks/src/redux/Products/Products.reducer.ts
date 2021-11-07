@@ -1,21 +1,16 @@
 import Products from "../../components/shared/Table/Table.mockdata";
 import {Product} from "../../model/Product";
 import {uuid} from "../../utils";
-import {
-    DELETE_EXISTING_PRODUCT,
-    deleteExistingProduct,
-    INSERT_NEW_PRODUCT,
-    UPDATE_EXISTING_PRODUCT
-} from "./Products.actions";
-
-export interface Action<T = any> {
-    type: string,
-    payload?: T
-}
+import {DELETE_EXISTING_PRODUCT, GET_PRODUCTS, INSERT_NEW_PRODUCT, UPDATE_EXISTING_PRODUCT} from "./Products.actions";
+import {Action} from "../index";
 
 // 1. first we create the redux reducer
 export default function (state: Product[] = Products, action: Action): Product[] {
     switch (action.type) {
+
+        case GET_PRODUCTS:
+            const ps = action.payload as Product[]
+            return [...ps]
 
         case INSERT_NEW_PRODUCT:
 

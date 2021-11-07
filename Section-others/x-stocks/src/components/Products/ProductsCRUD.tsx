@@ -1,10 +1,15 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Table, {TableHeader} from "../shared/Table";
 import ProductForm from "./ProductForm";
 import {Product} from "../../model/Product";
 import {ProductCreator} from "../../model/ProductCreator";
 import {connect, useDispatch} from "react-redux";
-import {deleteExistingProduct, insertNewProduct, updateExistingProduct} from "../../redux/Products/Products.actions";
+import {
+    deleteExistingProduct,
+    getProducts,
+    insertNewProduct,
+    updateExistingProduct
+} from "../../redux/Products/Products.actions";
 import {errorAlert, infoAlert, questionCallbackAlert, successAlert} from "../shared/dialogs/Alerts";
 
 const headers: TableHeader[] = [
@@ -34,6 +39,19 @@ const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
     const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(newEmptyProduct())
 
     const dispatch = useDispatch();
+
+    async function fetchData() {
+        try {
+            await dispatch(getProducts())
+        } catch (e) {
+            errorAlert(`Unexpected error: ${e}`)
+        }
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
 
 
     /**

@@ -193,3 +193,18 @@ https://github.com/zalmoxisus/redux-devtools-extension
 ## 4.5. Fire redux actions from components
 
 - [Fire redux actions from components](https://redux.js.org/tutorials/fundamentals/part-2-concepts-data-flow)
+
+
+## 4.6. Redux Thunk: Actions Async
+
+- [Redux Thunk](https://github.com/reduxjs/redux-thunk)
+- https://redux.js.org/recipes/usage-with-typescript
+- https://redux.js.org/recipes/usage-with-typescript
+
+```
+$ yarn add redux-thunk
+```
+
+```
+redux-thunk@2.4.0
+```
