@@ -10,6 +10,7 @@ import {
     updateSingleProduct
 } from "../../service/Products.service";
 import {ProductCreator} from "../../model/ProductCreator";
+import {connect} from "react-redux";
 
 const headers: TableHeader[] = [
     {key: '_id', value: '#'},
@@ -27,10 +28,15 @@ const newEmptyProduct = (): Product => ({
     updatedAt: undefined
 });
 
-// React.FC<ProductFormProps> = (props
-const ProductsCRUD: React.FC = (props) => {
+declare interface  ProductsCRUDProps {
+    products: Product[]
 
-    const [products, setProducts] = useState<Product[]>([]);
+}
+
+// React.FC<ProductFormProps> = (props
+const ProductsCRUD: React.FC<ProductsCRUDProps> = (props) => {
+
+    //const [products, setProducts] = useState<Product[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(newEmptyProduct())
 
 
@@ -40,8 +46,8 @@ const ProductsCRUD: React.FC = (props) => {
     }, [])
 
     async function fetchData() {
-        const _products = await getAllProducts()
-        setProducts(_products)
+        //const _products = await getAllProducts()
+        //setProducts(_products)
     }
 
     /**
@@ -134,7 +140,7 @@ const ProductsCRUD: React.FC = (props) => {
         <React.Fragment>
             <Table
                 headers={headers}
-                data={products}
+                data={props.products}
                 enableActions={true}
                 onDelete={handleDeleteClick}
                 onDetail={handleProductDetail}
@@ -150,4 +156,13 @@ const ProductsCRUD: React.FC = (props) => {
     );
 }
 
-export default ProductsCRUD;
+const mapStateToProps = (state: any) => {
+    return {
+        products: state.products
+    }
+}
+
+
+//export default ProductsCRUD;
+
+export default connect(mapStateToProps)(ProductsCRUD)
