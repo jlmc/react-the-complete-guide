@@ -1,0 +1,34 @@
+
+.Input {
+    height: 45px;
+}
+
+.Input label {
+    display: flex;
+    flex-direction: column;
+}
+
+.Input label span {
+    text-transform: uppercase;
+    color: #09f;
+    font-size: .8em;
+    height: 15px;
+    letter-spacing: .75px;
+}
+
+.Input label input {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0; /* fix edge's default border-radius */
+    height: 30px;
+    color: #222;
+}
+
+.Input label input:focus {
+    border-color: #09f;
+    outline: none;
+}
+
+.Input label input::placeholder {
+    color: #ccc;
+}
