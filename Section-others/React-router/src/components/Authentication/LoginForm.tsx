@@ -2,6 +2,9 @@ import React, {useState} from "react";
 import Input from "../shared/Input";
 import Button from "../shared/Button";
 import Form from "../shared/Form";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+import {User} from "../../service/Authentication.service";
+import {Credentials, signIn} from "../../redux/Authentication/Authentication.actions";
 
 const LoginForm = () => {
     const [form, setForm] = useState({
@@ -9,9 +12,42 @@ const LoginForm = () => {
         pass: ''
     });
 
+    const dispatch = useAppDispatch();
+    const user: User | undefined = useAppSelector(state => state.authentication.user);
+
+    /*
+      const dispatch = useDispatch();
+  const username = useSelector(state => state.authentication.username);
+     */
+
     const handleLogin = () => {
         console.table(form)
+
+        let credentials = {
+            username: 'abc', pass: '122'
+        } as Credentials;
+
+        dispatch(signIn(credentials))
     }
+
+
+/*    function loginHandle(event) {
+        event.preventDefault();
+        let passwordValue = passwordTextInput.current.value;
+        console.log("Password: " + passwordValue)
+        console.log("Username: " + usernameValue)
+
+        dispatch(authenticationSliceActions.login({
+            username: usernameValue,
+            password: passwordValue
+        }))
+    }*/
+
+    /*
+        useEffect(() => {
+        appDispatch(ProductActions.fetchAllProducts(1234))
+    }, [appDispatch])
+     */
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {value, name} = event.target

@@ -5,6 +5,7 @@ import Button from "../shared/Button";
 import {Product} from "../../model/Product";
 import {ProductCreator} from "../../model/ProductCreator";
 import {ProductUpdater} from "../../model/ProductUpdater";
+import withPermission from "../../HOC/withPermission";
 
 export interface ProductFormProps {
     product?: Product
@@ -127,4 +128,5 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
     </React.Fragment>
 }
 
-export default ProductForm
+// export default ProductForm
+export default withPermission(['customer', 'admin']) (ProductForm)

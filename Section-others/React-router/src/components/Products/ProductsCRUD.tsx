@@ -41,7 +41,10 @@ const ProductsCRUD: React.FC = (props) => {
 
     const appDispatch = useAppDispatch();
     //const products: Product[] | null = useAppSelector((state) => state.products.entities);
-    const productsState: ProductsState = useAppSelector((state) => state.products);
+    const entities: Product[] | null = useAppSelector((state) => state.products.entities);
+    const loading: string | null = useAppSelector((state) => state.products.loading);
+    //const productsState: ProductsState = useAppSelector((state) => state.entities);
+    //const productsState: ProductsState = useAppSelector((state) => state.products);
 
 
     useEffect(() => {
@@ -149,10 +152,10 @@ const ProductsCRUD: React.FC = (props) => {
     return (
         <React.Fragment>
             {
-                productsState.loading === SUCCEEDED &&
+                loading === SUCCEEDED &&
                 <Table
                     headers={headers}
-                    data={productsState.entities}
+                    data={entities}
                     enableActions={true}
                     onDelete={handleDeleteClick}
                     onDetail={handleProductDetail}
@@ -160,7 +163,7 @@ const ProductsCRUD: React.FC = (props) => {
                 />
             }
             {
-                productsState.loading === PENDING && <div>loading...</div>
+                loading === PENDING && <div>loading...</div>
             }
             <ProductForm
                 product={selectedProduct}

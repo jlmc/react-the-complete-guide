@@ -1,9 +1,10 @@
 import React from "react";
 import {RootState} from "../redux";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import Container from "../components/shared/Container";
 import Header from "../components/Header";
 import ProfileCard from "../components/Authentication/ProfileCard";
+import withPermission from "../HOC/withPermission";
 
 declare interface ProfileViewProps {
     user: {
@@ -13,6 +14,7 @@ declare interface ProfileViewProps {
 }
 
 const ProfileView: React.FC<ProfileViewProps> = (props) => {
+
     return <>
 
         <Header title="x-stock" />
@@ -27,12 +29,21 @@ const ProfileView: React.FC<ProfileViewProps> = (props) => {
     </>
 }
 
-const mapStateToProps = (state: RootState) => ({
+// mocked
+const mapStateToPropsMock= (state: RootState) => ({
     user: {
         name: 'John Doe',
         email: 'John.Doe@example.com'
     }
 })
 
+const mapStateToProps = (state: RootState) => ({
+    user: {
+        name: state.authentication.user?.user || 'Anonymous',
+        email: state.authentication.user?.email || 'Anonymous',
+    }
+})
+
 //export default ProfileView
-export default connect(mapStateToProps)(ProfileView)
+export default connect(mapStateToProps)(
+    withPermission(['customer', 'admin'], '/login')(ProfileView))
