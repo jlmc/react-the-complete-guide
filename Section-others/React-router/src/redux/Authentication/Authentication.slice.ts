@@ -1,5 +1,4 @@
-import {createSelector, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {Product} from "../../model/Product";
+import {createSelector, createSlice} from "@reduxjs/toolkit";
 import {User} from "../../service/Authentication.service";
 import {signIn} from "./Authentication.actions";
 import {RootState} from "../index";
@@ -26,6 +25,13 @@ const authenticationSlice = createSlice({
     initialState,
     reducers: {
         // fill in primary logic here
+
+        //logout(state, action: PayloadAction) {
+        logout(state) {
+            state.user = undefined
+            state.loading = IDLE
+        },
+
     },
     extraReducers: (builder) => {
         builder.addCase(signIn.pending, (state, action) => {
@@ -46,30 +52,26 @@ const authenticationSlice = createSlice({
     },
 })
 
-
 export const getJwtToken = createSelector(
     (state: RootState) => state.authentication,
-    (user?: AuthenticationState) => {
-
-        console.log('JWT-0.1: ' + user)
-
-        return 'CRAZY-TOKEN'
+    (authenticationState?: AuthenticationState) => {
+        return authenticationState?.user?.jwtToken || ''
     }
 )
 
-/*
-export const getTotalPrice = createSelector(
-  (state: RootState) => state.cart.items,
-  (state: RootState) => state.products.products,
-  (items, products) => {
-    let total = 0;
-    for (let id in items) {
-      total += products[id].price * items[id];
+export const getUsername = createSelector(
+    (state: RootState) => state.authentication,
+    (authenticationState?: AuthenticationState) => {
+        return authenticationState?.user?.user || ''
     }
-    return total.toFixed(2);
-  }
-);
- */
+)
+
+export const getCurrentUser = createSelector(
+    (state: RootState) => state.authentication,
+    (authenticationState: AuthenticationState) => {
+        return authenticationState.user;
+    }
+)
 
 export const authenticationSliceActions = authenticationSlice.actions;
 

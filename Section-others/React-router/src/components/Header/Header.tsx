@@ -1,7 +1,9 @@
 import React from "react";
 import './Header.css'
-import {useAppSelector} from "../../hooks";
-import {getJwtToken} from "../../redux/Authentication/Authentication.slice";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+import {authenticationSliceActions, getCurrentUser, getUsername} from "../../redux/Authentication/Authentication.slice";
+import {User} from "../../service/Authentication.service";
+import {useNavigate} from "react-router-dom";
 
 declare interface HeaderProps {
     title: string
@@ -9,12 +11,42 @@ declare interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = (props) => {
 
-    const username = useAppSelector(getJwtToken);
+    const username = useAppSelector(getUsername);
+    const currentUser: User | undefined = useAppSelector(getCurrentUser);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const signInClickHandler = () => {
+        navigate('/login', {replace: true})
+    }
+
+    const profileClickHandler = () => {
+        navigate('/profile', {replace: true})
+    }
+
+    const homeClickHandler = () => {
+        navigate('/', {replace: true})
+    }
+
+    const logoutClickHandler = () => {
+        dispatch(authenticationSliceActions.logout())
+    }
 
     return (
         <header className="AppHeader">
-            <h1>{props.title}</h1>
-            <span>{username}</span>
+            <h1 onClick={homeClickHandler}>{props.title}</h1>
+            {currentUser &&
+            <div>
+                <span onClick={profileClickHandler}>{username}</span>
+                <span onClick={logoutClickHandler}>Logout</span>
+            </div>
+            }
+            {!currentUser &&
+            <div>
+                <span onClick={signInClickHandler}>SignIn</span>
+            </div>
+            }
+
         </header>)
 }
 
