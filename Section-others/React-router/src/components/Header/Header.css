@@ -1,0 +1,26 @@
+header.AppHeader {
+    background-color: #09f;
+    color: #fff;
+    height: 80px;
+
+    flex-direction: column;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+    box-shadow: 0 3px 6px rgb(0,0,0,.2);
+
+    margin-bottom: 10px;
+}
+
+header.AppHeader h1 {
+    font-size: 1.2em;
+    margin-bottom: 7px;
+}
+
+header.AppHeader span {
+    cursor: pointer;
+    margin-right: 15px;
+}
