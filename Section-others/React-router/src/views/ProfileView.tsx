@@ -1,6 +1,6 @@
 import React from "react";
 import {RootState} from "../redux";
-import {connect, useSelector} from "react-redux";
+import {connect} from "react-redux";
 import Container from "../components/shared/Container";
 import Header from "../components/Header";
 import ProfileCard from "../components/Authentication/ProfileCard";
@@ -30,12 +30,14 @@ const ProfileView: React.FC<ProfileViewProps> = (props) => {
 }
 
 // mocked
+/*
 const mapStateToPropsMock= (state: RootState) => ({
     user: {
         name: 'John Doe',
         email: 'John.Doe@example.com'
     }
 })
+ */
 
 const mapStateToProps = (state: RootState) => ({
     user: {

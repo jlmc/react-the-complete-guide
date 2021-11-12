@@ -7,7 +7,7 @@ import {errorAlert, infoAlert, questionCallbackAlert, successAlert} from "../sha
 import * as ProductActions from "../../redux/Prod/Product.actions";
 
 import {useAppDispatch, /*useAppDispatch, */ useAppSelector} from '../../hooks';
-import {productSliceActions, PENDING, ProductsState, SUCCEEDED} from "../../redux/Prod/Product.slice";
+import {productSliceActions, PENDING, SUCCEEDED} from "../../redux/Prod/Product.slice";
 import Button from "../shared/Button";
 //import {getAllProducts} from "../../service/Products.service";
 
@@ -27,9 +27,9 @@ const newEmptyProduct = (): Product => ({
     updatedAt: undefined
 });
 
-declare interface ProductsCRUDProps {
+/*declare interface ProductsCRUDProps {
     products: Product[]
-}
+}*/
 
 // React.FC<ProductFormProps> = (props
 const ProductsCRUD: React.FC = (props) => {

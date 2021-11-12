@@ -9,8 +9,9 @@ export const injectStore = (_rootState: RootState) => {
 // create a new Instance of axios, using a preconfigured configs that we can have
 // https://redux.js.org/faq/code-structure#how-can-i-use-the-redux-store-in-non-component-files
 const Http = axios.create({
-    baseURL: 'http://localhost:3024',
+    baseURL: 'http://api-gw:3024',
     /*
+    baseURL: 'http://localhost:3024',
     headers: {
         Authorization: 'Bearer 123'
     }

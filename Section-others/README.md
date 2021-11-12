@@ -1,5 +1,16 @@
 # Ignition React
 
+## Free Curse
+- https://egghead.io/lessons/react-handling-errors-in-async-thunks-with-builder-addcase
+
+## Content
+
+1. x-stock
+2. Redux-example-local-actions
+3. Redux-with-async-tunks
+4. Redux-store-with-slice
+5. React-router
+
 ## 1. Learning the basics of React in Codepen
 
 
@@ -51,3 +62,8 @@ ReactDOM.render(
 )
 
 ```
+
+
+## Mock backend
+
+- [stock](https://github.com/algaworks/api-alga-stock)

@@ -1,7 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Product} from "../../model/Product";
 import {fetchAllProducts} from "./Product.actions";
-import {stat} from "fs";
 
 export const IDLE = 'idle'
 export const PENDING = 'pending'
