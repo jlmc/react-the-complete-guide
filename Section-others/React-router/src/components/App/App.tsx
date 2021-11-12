@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import HomeView from "../../views/HomeView";
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import ProductsView from "../../views/ProductsView";
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import NotFoundView from "../../views/NotFoundView";
 import LoginView from "../../views/LoginView";
 import ProfileView from "../../views/ProfileView";
@@ -22,15 +22,18 @@ function App() {
     return (
         <div>
             <BrowserRouter>
+
+
                 <Routes>
-                    <Route path="/" element={<HomeView/>}/>
+                    <Route path={"/"} element={<Navigate to="/products" />}/>
+                    <Route path="/products" element={<ProductsView/>}/>
                     <Route path="/login" element={<LoginView/>}/>
                     <Route path="/profile" element={<ProfileView/>}/>
 
                     <Route
                         path="*"
                         element={
-                          <NotFoundView/>
+                            <NotFoundView/>
                         }
                     />
                 </Routes>

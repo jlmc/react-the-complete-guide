@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import ProductsCRUD from "../components/Products/ProductsCRUD";
 import Container from "../components/shared/Container";
 
-const HomeView = () => {
+const ProductsView = () => {
     return <React.Fragment>
         <Header title="x-stock"/>
         <Container>
@@ -12,4 +12,4 @@ const HomeView = () => {
     </React.Fragment>
 }
 
-export default HomeView
+export default ProductsView
