@@ -2,6 +2,8 @@ import React from "react";
 import './Table.scss'
 import {IndexedHeaders, organizeData, OrganizedItem} from "./organizeData";
 import Button from "../Button";
+import {NavLink, useLocation} from "react-router-dom";
+import {parse} from "query-string"; // yarn add query-string
 
 export declare interface TableHeader {
     key: string
@@ -15,18 +17,27 @@ declare interface TableProps {
 
     enableActions?: boolean
 
+    itemPerPage?: number
+
     onDelete?: (item: any) => void
     onDetail?: (item: any) => void
     onEdit?: (item: any) => void
 }
 
 const Table: React.FC<TableProps> = (props, context) => {
-
+    const location = useLocation();
     //const [organizedData, indexedHeaders]: [OrganizedItem[], IndexedHeaders] = organizeData(Products, headers);
-    const [organizedData, indexedHeaders]: [OrganizedItem[], IndexedHeaders] = organizeData(props.data, props.headers);
-
+    const currentPage = parseInt(parse(location.search).page as string) || 1
+    const [organizedData, indexedHeaders, totalPages]: [OrganizedItem[], IndexedHeaders, number] = organizeData(props.data, props.headers, currentPage, props.itemPerPage || 5);
     //console.table(organizedData)
     //console.table(indexedHeaders)
+
+    //console.table(location)
+    //console.log(currentPage)
+
+    const isActive = (index: number) => {
+        return currentPage === index + 1
+    }
 
     return <React.Fragment>
         <table className="Table">
@@ -97,6 +108,21 @@ const Table: React.FC<TableProps> = (props, context) => {
             }
             </tbody>
         </table>
+        <div className="table-pagination">
+            {
+                Array(totalPages)
+                    .fill('')
+                    .map((_, i) => {
+                        return <NavLink
+                            key={`p_${i}`}
+                            to={`/products?page=${i + 1}`}
+
+                            className={isActive(i) ? 'selected' : ''}
+                        >{i + 1}</NavLink>
+                    })
+
+            }
+        </div>
     </React.Fragment>
 }
 
