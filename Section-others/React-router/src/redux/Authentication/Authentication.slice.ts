@@ -73,6 +73,29 @@ export const getCurrentUser = createSelector(
     }
 )
 
+export const getSummary = createSelector(
+    (state: RootState) => state.authentication.user,
+    (state: RootState) => state.products.entities,
+    (user, entities) => {
+
+        let maxProduct = entities.length > 0 ? entities[0] : null
+        for (let i = 0; i < entities.length; i++) {
+            if (i === 0) {
+                maxProduct = entities[i]
+            } else {
+                if (maxProduct != null && maxProduct?.stock < entities[i].stock) {
+                    maxProduct = entities[i]
+                }
+            }
+        }
+
+        const s = user?.user
+        console.log('---> ' + maxProduct?.stock)
+
+        return `${s} - ${maxProduct != null ? maxProduct.stock : ''}`
+    }
+)
+
 export const authenticationSliceActions = authenticationSlice.actions;
 
 export default authenticationSlice;
